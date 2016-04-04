@@ -1,0 +1,540 @@
+<metal:macro use-macro="master">
+
+	<metal:slot fill-slot="title">
+	    <title tal:condition='python: logged_in and (current_user.id == user.id)'>
+	    	Fubb | My Collection
+	    </title>
+	    <title tal:condition='python: logged_in and not (current_user.id == user.id)'>
+	    	Fubb | ${user.username}'s Collection
+	    </title>
+	</metal:slot>
+
+	<metal:slot fill-slot="fb-meta">
+		<meta property="og:image" content="link/to/image"/>
+		<meta property="og:title" content="${user.username}'s Collection"/>
+		<meta property="og:url" content="${request.application_url}/accounts/${user.id}/movies"/>
+	</metal:slot>
+
+	<metal:slot fill-slot='css'>
+		<link rel='stylesheet' type='text/css' media='screen' href='/static/stylesheets/forms.css' />
+		<link rel='stylesheet' type='text/css' media='screen' href='/static/stylesheets/movies.css' />
+		<link rel='stylesheet' type='text/css' media='screen' href='/static/stylesheets/index.css' />
+	</metal:slot>
+
+	<metal:slot fill-slot='script'>
+		<script type='text/javascript' src='/static/javascripts/movies.js'></script>
+		<script type='text/javascript' src='/static/javascripts/index.js'></script>
+		<script type='text/javascript' src='/static/javascripts/search_form.js'></script>
+	</metal:slot>
+
+	<metal:slot fill-slot='description'>
+				
+	</metal:slot>
+
+	<metal:slot fill-slot='content'>
+
+		<!-- TOOLBAR -->
+		<div id='static_top'>
+			<div tal:condition='python: logged_in and (current_user.id == user.id)' class='title_wrapper'>
+				<span class='title_font'>
+				My Collection (${collection_size})
+				</span>
+
+				<img src='/static/images/icons/triangle_icon.png' class='subtab_icon small_dropdown_btn' />
+				<span id='small_dropdown_core' class='small_dropdown'>
+					<a id='random_btn' href='${request.application_url}/accounts/${user.id}/movies/random' title='Click Here to Pull a random movie'>
+						<img src='/static/images/icons/random_icon.png' class='subtab_icon' />
+					</a>
+					<a href='${request.application_url}/accounts/${user.id}/movies/add' title='Click here to add a new movie'>
+						<img src='/static/images/icons/addmovie_icon.png' class='subtab_icon'/>
+					</a>
+					<a href='${request.application_url}/accounts/${user.id}/movies/stats' title="Click here to see the collection's stats">
+						<img src='/static/images/icons/stats_icon.png' class='subtab_icon'/>
+					</a>
+					<a title='Click here to Share this collection With Others'>
+						<img id='share_btn' src='/static/images/icons/share_icon.png' class='subtab_icon' data-embedUrl='${request.application_url}/${user.id}/movies' />
+					</a>
+					<a title='Download Your Collection'>
+						<img id='downloadCollection_btn' src='/static/images/icons/download_icon.png' class='subtab_icon' />
+					</a>
+				</span>
+				<img class='subtab_icon small_dropdown_btn' src='/static/images/icons/eye_icon.png' />	
+				<span id='small_dropdown_view' class='small_dropdown views_span'>		
+					<img id='list_view' class='view_btn' data-viewbutton='list' title='List View' src='/static/images/icons/listview_icon.png' />
+					<img id='window_view' class='view_btn' data-viewbutton='window' title='Window View' src='/static/images/icons/windowview_icon.png' />
+					<img id='details_view' class='view_btn' data-viewbutton='details' title='Details View' src='/static/images/icons/detailsview_icon.png' />
+				</span>
+
+			</div>
+
+			<div tal:condition='python: (not logged_in) or (current_user.id != user.id)' class='title_wrapper'>
+				<span class='title_font' tal:condition='python: logged_in and (user.privacy is not None) and not (user.privacy.show_profile=="onlyme")'>
+					<a href='${request.application_url}/accounts/${user.id}'>
+						${user.username}'s</a> Collection (${collection_size})
+				</span>
+				<span class='title_font' tal:condition='python: not logged_in and (user.privacy is not None) and not (user.privacy.show_profile=="onlyme" or user.privacy.show_profile=="fubbusers")'>
+					<a href='${request.application_url}/accounts/${user.id}'>
+						${user.username}'s</a> Collection (${collection_size})
+					
+				</span>
+				<span class='title_font' tal:condition='python: not logged_in and (user.privacy is None)'>
+					<a href='${request.application_url}/accounts/${user.id}'>
+						${user.username}'s</a> Collection (${collection_size})
+				</span>
+
+				<img src='/static/images/icons/triangle_icon.png' class='subtab_icon small_dropdown_btn' />
+				<span id='small_dropdown_core' class='small_dropdown'>
+					<a id='random_btn' href='${request.application_url}/accounts/${user.id}/movies/random' title='Click Here to Pull a random movie'>
+						<img src='/static/images/icons/random_icon.png' class='subtab_icon' />
+					</a>
+					<a tal:condition='python: logged_in and (user.privacy is not None) and not (user.privacy.show_stats=="onlyme")' href='${request.application_url}/accounts/${user.id}/movies/stats' title="Click here to see the collection's stats">
+						<img src='/static/images/icons/stats_icon.png' class='subtab_icon'/>
+					</a>
+					<a tal:condition='python: not logged_in and (user.privacy is not None) and not (user.privacy.show_stats=="onlyme" or user.privacy.show_stats=="fubbusers")' href='${request.application_url}/accounts/${user.id}/movies/stats' title="Click here to see the collection's stats">
+						<img src='/static/images/icons/stats_icon.png' class='subtab_icon'/>
+					</a>					
+					<a title='Click here to Share this collection With Others'>
+						<img id='share_btn' src='/static/images/icons/share_icon.png' class='subtab_icon' data-embedUrl='${request.application_url}/${user.id}/movies' />
+					</a>
+					<a title='Download Your Collection'>
+						<img id='downloadCollection_btn' src='/static/images/icons/download_icon.png' class='subtab_icon' />
+					</a>
+
+				</span>
+
+				<img id='small_dropdown_view' src='/static/images/icons/eye_icon.png' class='subtab_icon small_dropdown_btn' />
+				<span id='small_dropdown_view' class='small_dropdown views_span'>
+					<img id='list_view' class='view_btn' data-viewbutton='list' title='List View' src='/static/images/icons/listview_icon.png' />
+					<img id='window_view' class='view_btn' data-viewbutton='window' title='Window View' src='/static/images/icons/windowview_icon.png' />
+					<img id='details_view' class='view_btn' data-viewbutton='details' title='Details View' src='/static/images/icons/detailsview_icon.png' />
+				</span>
+			</div>
+
+		</div>
+		<!-- TOOLBAR -->
+
+		<div class='scroll_page'>
+			
+			<br /><br />
+			<br /><br />
+
+			<!-- SEARCH FORM -->
+			<form method='get' class='search_form' action='${request.application_url}/accounts/${user.id}/movies'>
+				<input type='text' name='query' value='${page_args["query"]}' placeholder='Type a search query' />
+				<select name='orderby' value='${page_args["orderby"]}' >
+					<option value=''>Order By</option>
+					<option value='title'>Title</option>
+					<option value='year'>Year</option>
+					<option value='genre_tags'>Genres</option>
+					<option value='location'>Location</option>
+					<option value='status_dl'>Download Status</option>
+					<option value='status_w'>Watched Status</option>
+					<option value='entry_date'>Entry Date</option>
+					<option value='director'>Director</option>
+					<option value='writer'>Writer</option>
+					<option value='imdb_rating'>IMDB Rating</option>
+					<option value='imdb_votes'>IMDB Votes</option>
+					<option value='runtime'>Runtime</option>
+				</select>
+				<input type='submit' value='Search' />
+				<br />
+				<small id='uncollapse_advanced'>Advanced search options</small>
+				<div id='advanced_search'>
+					<table>
+						<tbody>
+							<tr>
+								<td><label class='small_label'>Results/Page</label></td>
+								<td><label class='small_label'>Search by</label></td>
+								<td><label class='small_label'>View</label></td>
+							</tr>
+							<tr>
+								<td>
+									<input name='results' value='${page_args["results"]}' type='number' min='1' max='250' step='1' />
+								</td>
+								<td>					
+									<select name='filterby'>
+										<option value='title'>Title</option>
+										<option value='year'>Year</option>
+										<option value='genre_tags'>Genres</option>
+										<option value='director'>Director</option>
+										<option value='writer'>Writer</option>
+									</select>
+								</td>
+								<td>
+									<select name='view'>
+										<option value='details'>Details</option>
+										<option value='window'>Window</option>
+										<option value='list'>List</option>
+									</select>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<br />
+				</div>
+			</form>
+			<!-- SEARCH FORM -->
+
+			<br />
+			<!-- TEXT FOR SEARCH RESULTS -->			
+			<div tal:condition='python: (page_args["query"] is not None)' style='margin-left:2.5%;'>
+				<div tal:condition='python: (len(movies) == 0)'>
+					<br />
+					<span class='sub_title_font'>
+						No results found for, "${page_args['query']}".
+					</span>
+					<p class='basic_font'>
+						Click <a href='${request.application_url}/accounts/${user.id}/movies'>here</a> to return to the full collection.
+					</p>
+				</div>
+
+				<span class='sub_title_font' tal:condition='python: (len(movies) > 0)'>
+					<br />
+					${len(movies)} results found for, "${page_args['query']}"
+				</span>
+			</div>
+			<!-- TEXT FOR SEARCH RESULTS -->	
+
+			<!-- TEXT FOR NO MOVIES -->
+				<div tal:condition='python: (collection_size == 0)' style='margin-left:2.5%;'>
+					<br /><br />
+					<div tal:condition='python: logged_in'>
+						<div tal:condition='python: (user.id == current_user.id)'>
+							<span class='sub_title_font'>
+								You don't have any movies in your collection 
+							</span>
+							<p class='basic_font'>
+								Click <a href='/accounts/${user.id}/movies/add'> here </a> to Add One.
+							</p> 
+						</div>
+						<div tal:condition='python: not (user.id== current_user.id)'>
+						<span class='sub_title_font'>
+							${user.username} currently has no Movies in their collection
+						</span>
+						<p class='basic_font'> 
+							Click <a href='${request.application_url}/accounts'>here</a> to continue browsing accounts.
+						</p>
+					</div>
+				</div>
+				<div tal:condition='python: not logged_in'>
+					<span class='sub_title_font'>
+						${user.username} currently has no Movies in their collection
+					</span>
+					<p class='basic_font'> 
+						Click <a href='${request.application_url}/accounts'>here</a> to continue browsing accounts.
+					</p>
+				</div>
+			</div>
+			<!-- TEXT FOR NO MOVIES -->		
+
+			<!-- PAGINATION -->
+			<div tal:condition="python: (pagination['number_of_pages'] > 0)" class='pagination_controls'>
+				<ul>
+					<li tal:condition='python: (pagination["prev_page"] >= 0)'>
+						<a href='${request.application_url}/accounts/${user.id}/movies?&query=${page_args["query"]}&orderby=${page_args["orderby"]}&view=${page_args["view"]}&page=${pagination["prev_page"]}&results=${pagination["results"]}'>
+							<- Previous
+						</a>
+					</li>
+					<li tal:repeat='x pagination["page_list"]'>
+						<div tal:condition='python: (x == pagination["current_page"])'>
+							<a class='paginator-current_page' href='${request.application_url}/accounts/${user.id}/movies?&query=${page_args["query"]}&view=${page_args["view"]}&orderby=${page_args["orderby"]}&page=${x}&results=${pagination["results"]}'>
+								${x}
+							</a>
+						</div>
+						<div tal:condition='python: not (x == pagination["current_page"])' >
+							<a class='paginator-inactive_page' href='${request.application_url}/accounts/${user.id}/movies?&query=${page_args["query"]}&orderby=${page_args["orderby"]}&view=${page_args["view"]}&page=${x}&results=${pagination["results"]}'>
+								${x}
+							</a>
+						</div>
+					</li>
+					<li tal:condition='python: (pagination["next_page"] <= pagination["number_of_pages"]-1)' >
+						<a href='${request.application_url}/accounts/${user.id}/movies?&query=${page_args["query"]}&orderby=${page_args["orderby"]}&view=${page_args["view"]}&page=${pagination["next_page"]}&results=${pagination["results"]}'>
+							Next ->
+						</a>
+					</li>
+				</ul>
+			</div>
+			<!-- PAGINATION -->
+
+			<br /><br />	
+			
+			<div id='list_view_page' class='hidden_page'>
+				<table>
+					<thead>
+						<tr>
+							<td>
+								<span class='sub_title_font'>Title</span>
+							</td>
+							<td>
+								<span class='sub_title_font'>Genre</span>
+							</td>
+							<td>
+								<span class='sub_title_font'>Format</span>
+							</td>
+							<td>
+								<span class='sub_title_font'>Watched Status</span>
+							</td>
+							<td>
+								<span class='sub_title_font'>Download Status</span>
+							</td>
+
+							<td tal:condition='python: logged_in and (current_user.id == user.id)'>
+								<span class='sub_title_font'>Edit</span>
+							</td>
+							<td tal:condition='python: logged_in and (current_user.id == user.id)'>
+								<span class='sub_title_font'>Delete</span>
+							</td>
+						</tr>
+					</thead>
+					<tbody>
+						<tr tal:repeat="movie movies">
+							<td id='movie_${movie.id}'><a  class='sub_title_font' href='/accounts/${user.id}/movies/${movie.id}'>${movie.title}</a></td>
+							<td id='movie_${movie.id}_genres'>${movie.genre_tags}</td>
+							<td id='movie_${movie.id}_location'>${movie.location}</td>
+							<td id='movie_${movie.id}_status_w'>${movie.status_w}</td>
+							<td id='movie_${movie.id}_status_dl'>${movie.status_dl}</td>
+							<td tal:condition='python: logged_in and (current_user.id == user.id)' >
+								<a class='edit_opt' data-mid='${movie.id}'>
+									<img src='/static/images/icons/edit_icon.png' class='subtab_icon' />
+								</a>
+							</td>
+							<td tal:condition='python: logged_in and (current_user.id == user.id)'>
+								<a class='delete_btn' data-mtitle='${movie.title}' data-deleteUrl='${request.application_url}/accounts/${user.id}/movies/${movie.id}/delete'>
+									<img src='/static/images/icons/delete_icon.png' class='subtab_icon' />
+								</a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
+			<div id='window_view_page' class='hidden_page'>
+				<div tal:repeat='movie movies'>
+					<a href='/accounts/${user.id}/movies/${movie.id}' src=''>
+						<img id='movie_${movie.id}_poster' src='${movie.poster}' class='poster_img' />
+					</a>
+				</div>
+			</div>
+
+			<div id='details_view_page' class='active_page'>
+				<table>
+					<tbody>
+						<tr tal:repeat='movie movies'>
+							<div style='display:none' id='m_${movie.id}' class='movie_data' data-title='${movie.title}' data-year='${movie.year}' data-rated='${movie.rated}' data-imdbRating='${movie.imdb_rating}' data-imdbVotes='${movie.imdb_votes}' data-runtime='${movie.runtime}' data-director='${movie.director}' data-writer='${movie.writer}' data-actors='${movie.actors}' data-country='${movie.country}' data-awards='${movie.awards}' data-language='${movie.language}' data-embed='${movie.embed}' data-poster='${movie.poster}' data-imdb='${movie.imdb_id}'>
+								${movie.plot}
+							</div>
+							<td>
+								<a title='${movie.title}' href='${request.application_url}/accounts/${user.id}/movies/${movie.id}'>
+									<img class='poster_img' src='${movie.poster}' />
+								</a>
+							</td>
+							<td style='padding-left: 25px'>
+								<p class='sub_title_font'>
+									<a href='${request.application_url}/accounts/${user.id}/movies/${movie.id}'>${movie.title} (${movie.year})</a>
+									<a tal:condition='(logged_in and (current_user.id == user.id))'  data-mid='${movie.id}' title='Click here to Edit the databse entry for ${movie.title}' class='edit_opt'>
+										<img  src='/static/images/icons/edit_icon.png' class='subtab_icon' />
+									</a>
+									<a tal:condition='logged_in and (current_user.id == user.id)' data-deleteUrl='${request.application_url}/accounts/${user.id}/movies/${movie.id}/delete' title='Click here to Delete the databse entry for ${movie.title}' class='delete_btn' data-mtitle='${movie.title}'>
+										<img src='/static/images/icons/delete_icon.png' class='subtab_icon' />
+									</a>
+								</p>
+								<small style='color:white;'>
+									Rated: ${movie.rated} | imdb Rating: ${movie.imdb_rating} | imdb Votes: ${movie.imdb_votes} | Runtime: ${movie.runtime} | 
+								</small>
+								<p class='basic_font'>
+									${movie.plot}
+								</p>
+								<small style='color:white;'>
+									Director(s): ${movie.director} <br />
+									Writer(s): ${movie.writer} <br />
+								</small>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<br /><br />
+
+			<div tal:repeat='movie movies'>
+				<div tal:condition='python: (current_user is not None) and (current_user.id == user.id)' id='editslab_${movie.id}' class='invisible'>
+					<div class='popup_title'>Edit ${movie.title}</div>
+					<br />
+					<table>
+						<form action="/accounts/${user.id}/movies/${movie.id}/edit" method="post">
+							<tbody>
+								<tr>
+									<td class='label_slot'>
+										Genre:
+									</td>
+									<td>
+										<input type='text' name='genre_tags' value='${movie.genre_tags}' placeholder='#Horror' class='text_input' />
+									</td>
+								</tr>
+								<tr>
+									<td class='label_slot'>
+										Format													
+									</td>
+									<td>
+										<select tal:condition='python: (movie.location=="any")' name='location' class='dropdown_input'>
+											<option value='any'>Any</option>
+											<option value='dvd'>DVD</option>
+											<option value='bluray'>Bluray</option>
+											<option value='vhs'>VHS</option>
+											<option value='hd'>External HD</option>
+											<option value='computer'>Computer</option>
+										</select>
+										<select tal:condition='python: (movie.location=="dvd")' name='location' class='dropdown_input'>
+											<option value='dvd'>DVD</option>
+											<option value='any'>Any</option>
+											<option value='bluray'>Bluray</option>
+											<option value='vhs'>VHS</option>
+											<option value='hd'>External HD</option>
+											<option value='computer'>Computer</option>
+										</select>
+										<select tal:condition='python: (movie.location=="bluray")' name='location' class='dropdown_input'>
+											<option value='bluray'>Bluray</option>
+											<option value='any'>Any</option>
+											<option value='dvd'>DVD</option>
+											<option value='vhs'>VHS</option>
+											<option value='hd'>External HD</option>
+											<option value='computer'>Computer</option>
+										</select>
+										<select tal:condition='python: (movie.location=="vhs")' name='location' class='dropdown_input'>
+											<option value='vhs'>VHS</option>
+											<option value='any'>Any</option>
+											<option value='dvd'>DVD</option>
+											<option value='bluray'>Bluray</option>
+											<option value='hd'>External HD</option>
+											<option value='computer'>Computer</option>
+										</select>
+										<select tal:condition='python: (movie.location=="hd")' name='location' class='dropdown_input'>
+											<option value='hd'>External HD</option>
+											<option value='vhs'>VHS</option>
+											<option value='any'>Any</option>
+											<option value='dvd'>DVD</option>
+											<option value='bluray'>Bluray</option>
+											<option value='computer'>Computer</option>
+										</select>
+										<select tal:condition='python: (movie.location=="computer")' name='location' class='dropdown_input'>
+											<option value='computer'>Computer</option>
+											<option value='any'>Any</option>
+											<option value='dvd'>DVD</option>
+											<option value='bluray'>Bluray</option>
+											<option value='vhs'>VHS</option>
+											<option value='hd'>External HD</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td class='label_slot'>
+										Watched Status
+									</td>
+									<td>
+										<select tal:condition='python: (movie.status_w=="watched")' class='dropdown_input' name='status_w'>
+											<option value='watched'>Watched</option>
+											<option value='unwatched'>Not Watched</option>
+										</select>
+										<select tal:condition='python: (movie.status_w=="unwatched")' class='dropdown_input' name='status_w' value='${movie.status_w}'>
+											<option value='unwatched'>Not Watched</option>
+											<option value='watched'>Watched</option>
+										</select>
+									</td>
+								</tr>
+
+								<tr>
+									<td class='label_slot'>
+										Download Status
+									</td>
+									<td>
+										<select tal:condition='python: (movie.status_dl=="NA")' class='dropdown_input' name='status_dl' value='${movie.status_dl}'>
+											<option value='NA'>N/A</option>
+											<option value='pending'>Pending</option>
+											<option value='downloading'>Downloading</option>
+											<option value='downloaded'>Downloaded</option>
+											<option value='deleted'>Deleted</option>
+										</select>
+										<select tal:condition='python: (movie.status_dl=="pending")' class='dropdown_input' name='status_dl' value='${movie.status_dl}'>
+											<option value='pending'>Pending</option>
+											<option value='NA'>N/A</option>
+											<option value='downloading'>Downloading</option>
+											<option value='downloaded'>Downloaded</option>
+											<option value='deleted'>Deleted</option>
+										</select>
+										<select tal:condition='python: (movie.status_dl=="downloading")' class='dropdown_input' name='status_dl' value='${movie.status_dl}'>
+											<option value='downloading'>Downloading</option>
+											<option value='NA'>N/A</option>
+											<option value='pending'>Pending</option>
+											<option value='downloaded'>Downloaded</option>
+											<option value='deleted'>Deleted</option>
+										</select>
+										<select tal:condition='python: (movie.status_dl=="downloaded")' class='dropdown_input' name='status_dl' value='${movie.status_dl}'>
+											<option value='downloaded'>Downloaded</option>
+											<option value='NA'>N/A</option>
+											<option value='pending'>Pending</option>
+											<option value='downloading'>Downloading</option>
+											<option value='deleted'>Deleted</option>
+										</select>
+										<select tal:condition='python: (movie.status_dl=="deleted")' class='dropdown_input' name='status_dl' value='${movie.status_dl}'>
+											<option value='deleted'>Deleted</option>
+											<option value='downloaded'>Downloaded</option>
+											<option value='NA'>N/A</option>
+											<option value='pending'>Pending</option>
+											<option value='downloading'>Downloading</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td>
+									</td>
+									<td>
+										<input type='button' class='cancel_btn' value='Cancel' />
+										<input type='submit' class='confirm_btn' name='form.submitted' value='Submit' />
+									</td>
+								</tr>
+								<tr>
+									<td></td>
+									<td>
+										<span>Click <a href='${request.application_url}/accounts/${user.id}/movies/${movie.id}/edit'>here</a> for more advanced editing</span>
+									</td>
+								</tr>
+							</tbody>
+						</form>
+					</table>
+				</div>
+			</div>
+			<!-- PAGINATION -->
+			<div tal:condition="python: (pagination['number_of_pages'] > 0)" class='pagination_controls'>
+				<ul>
+					<li tal:condition='python: (pagination["prev_page"] >= 0)'>
+						<a href='${request.application_url}/accounts/${user.id}/movies?&query=${page_args["query"]}&orderby=${page_args["orderby"]}&view=${page_args["view"]}&page=${pagination["prev_page"]}&results=${pagination["results"]}'>
+							<- Previous
+						</a>
+					</li>
+					<li tal:repeat='x pagination["page_list"]'>
+						<div tal:condition='python: (x == pagination["current_page"])'>
+							<a class='paginator-current_page' href='${request.application_url}/accounts/${user.id}/movies?&query=${page_args["query"]}&view=${page_args["view"]}&orderby=${page_args["orderby"]}&page=${x}&results=${pagination["results"]}'>
+								${x}
+							</a>
+						</div>
+						<div tal:condition='python: not (x == pagination["current_page"])' >
+							<a class='paginator-inactive_page' href='${request.application_url}/accounts/${user.id}/movies?&query=${page_args["query"]}&orderby=${page_args["orderby"]}&view=${page_args["view"]}&page=${x}&results=${pagination["results"]}'>
+								${x}
+							</a>
+						</div>
+					</li>
+					<li tal:condition='python: (pagination["next_page"] <= pagination["number_of_pages"]-1)' >
+						<a href='${request.application_url}/accounts/${user.id}/movies?&query=${page_args["query"]}&orderby=${page_args["orderby"]}&view=${page_args["view"]}&page=${pagination["next_page"]}&results=${pagination["results"]}'>
+							Next ->
+						</a>
+					</li>
+				</ul>
+			</div>
+			<!-- PAGINATION CONTROLS -->
+			<br /><br />
+			<!-- Data that I reluctantly pass to JS from URL via Markup -->
+			<div id='view_mode' class='hidden_page' data-currentview='${page_args["view"]}'></div>
+			<!-- Data that I reluctantly pass to JS from URL via Markup -->
+		</div>
+	</metal:slot>
+
+</metal:macro>

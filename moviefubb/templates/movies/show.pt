@@ -1,0 +1,168 @@
+<metal:macro use-macro="master">
+
+	<metal:slot fill-slot="title">
+	    <title>Fubb | ${movie.title}</title>
+	</metal:slot>
+
+	<metal:slot fill-slot="fb-meta">
+		<meta property="og:image" content="${movie.poster}"/>
+		<meta property="og:title" content="${movie.title}"/>
+		<meta property="og:url" content="${request.application_url}/accounts/{user.id}/movies/${movie.id}" />
+	</metal:slot>
+
+	<metal:slot fill-slot='css'>
+		<link rel='stylesheet' type='text/css' media='screen' href='/static/stylesheets/movies.css' />
+		<link rel='stylesheet' type='text/css' media='screen' href='/static/stylesheets/movies_show.css' />
+	</metal:slot>
+
+	<metal:slot fill-slot='script'>
+		<script type='text/javascript' src='/static/javascripts/movies.js'></script>
+		<script type='text/javascript' src='/static/javascripts/movies_show.js'></script>
+	</metal:slot>
+
+	<metal:slot fill-slot='description'>
+		
+	</metal:slot>
+
+	<metal:slot fill-slot='content'>
+
+		<div class='scroll_page'>
+			<br />
+			<!-- TITLE and NAV -->
+			<div id='title_wrapper' style='margin-left: 2.5%;'>
+				<span class='title_font'>
+					${movie.title} (${movie.year})
+				</span>
+				<span>
+					<a title='Return to the Movie Index' href='/accounts/${user.id}/movies'>
+						<img title='Add a New Movie' class='page_title_image sub_tab' data-tab='movielist' src='/static/images/icons/arrow_left_icon.png' />
+					</a>
+					<a title='Click here to visit the IMDB page' href='http://www.imdb.com/title/${movie.imdb_id}/?ref_=fn_al_tt_1' target='_blank'>
+						<img class='page_title_image sub_tab' src='/static/images/icons/imdb_icon.png' />
+					</a>
+					<a title='Click here to Visit the Youtube Trailer' href='https://www.youtube.com/watch?v=${movie.embed}' target='_blank'>
+						<img class='page_title_image sub_tab' src='/static/images/icons/youtube_icon.png' />
+					</a>
+					<a title='Click here for a Random Movie' id='random_btn' href='${request.application_url}/accounts/${user.id}/movies/random'>
+						<img class='page_title_image sub_tab' src='/static/images/icons/random_icon.png' />
+					</a>
+				</span>
+
+				<span tal:condition="python: (current_user is not None) and (user.id==current_user.id)">
+					<a title='Edit the Current Movie Entry' href='/accounts/${user.id}/movies/${movie.id}/edit' >
+						<img title='Add a New Movie' class='page_title_image sub_tab' src='/static/images/icons/edit_icon.png' />
+					</a>
+					<a title='Delete the Current Movie Entry' data-mid='${movie.id}' data-mtitle='${movie.title}' data-deleteUrl='${request.application_url}/accounts/${user.id}/movies/${movie.id}/delete' class='delete_btn'>
+						<img title='Delete the Movie' class='page_title_image sub_tab' src='/static/images/icons/delete_icon.png' />
+					</a> 
+				</span>
+			</div>
+			<!-- TITLE and NAV -->
+
+			<!-- CAME FROM MESSAGE -->
+			<div tal:condition='python: logged_in and (continuous_addition) and (user.id==current_user.id)' class='came_from'>
+				<span class='sub_title_font'>
+					Movie Added Successfully. Click <a href='${request.application_url}/accounts/${user.id}/movies/add'>Here</a> to add another. 
+					<br />
+				</span>
+			</div>
+			<!-- CAME FROM MESSAGE -->
+
+			
+			<br /><br />
+			<!-- MOVIE PLAYER -->
+			<div class='side_box'>
+				<div id='movie_player'>
+					<iframe width="420" height="315" src="https://www.youtube.com/embed/${movie.embed}" frameborder="0" allowfullscreen></iframe>
+				</div>
+				<p class='basic_font plot'>
+					${movie.plot}
+				</p>
+			</div>
+			<!-- MOVIE PLAYER -->
+			
+			<!-- MOVIE INFO -->
+			<div class='side_box' id='minfo_side'>
+
+				<table id='movie_info'>
+					<tbody>
+						<tr>
+							<td>Rated</td>
+							<td>${movie.rated}</td>
+						</tr>
+						<tr>
+							<td>Runtime</td>
+							<td>${movie.runtime}</td>
+						</tr>
+						<tr>
+							<td>Director</td>
+							<td>${movie.director}</td>
+						</tr>
+						<tr>
+							<td>Writer</td>
+							<td>${movie.writer}</td>
+						</tr>
+
+						<tr>
+							<td>Actors</td>
+							<td>${movie.actors}</td>
+						</tr>
+
+						<tr>
+							<td>Year</td>
+							<td>${movie.year}</td>
+						</tr>
+
+						<tr>
+							<td>Genre</td>
+							<td>${movie.genre_tags}</td>
+						</tr>
+
+						<tr>
+							<td>Language</td>
+							<td>${movie.language}</td>
+						</tr>
+
+						<tr>
+							<td>Country</td>
+							<td>${movie.country}</td>
+						</tr>
+						
+						<tr>
+							<td>Awards</td>
+							<td>${movie.awards}</td>
+						</tr>
+
+						<tr>
+							<td>IMDB Rating</td>
+							<td>${movie.imdb_rating}</td>
+						</tr>
+
+						<tr>
+							<td>IMDB Votes</td>
+							<td>${movie.imdb_votes}</td>
+						</tr>
+						<tr>
+							<td>Watch Status</td>
+							<td>${movie.status_w}</td>
+						</tr>
+
+						<tr>
+							<td>Download Status</td>
+							<td>${movie.status_dl}</td>
+						</tr>
+
+						<tr>
+							<td>Location</td>
+							<td>${movie.location}</td>
+						</tr>
+
+					</tbody>
+				</table>
+			</div>
+			<!-- MOVIE INFO-->
+			<br /><br />
+		</div>
+	</metal:slot>
+
+</metal:macro>

@@ -1,0 +1,47 @@
+.side_box{
+	display:inline-block;
+	width:43%;
+	margin-left:5%;
+	vertical-align:top;
+}
+.title_font{
+	margin-left: 2.5%;
+}
+
+#user_table{
+	width:95%;
+	margin-left: 2%;
+}
+
+.ubox_wrapper{
+	display: inline-block;
+}
+.ubox{
+	width:200px;
+	background-color: black;
+	padding:25px;
+	margin-top:1.5%;
+	margin-left:2.5%;
+}
+
+#static_top{
+	width:100%;
+	padding:10px;
+	position:fixed;
+	top:0%;
+	left:5%;
+	background-color: black;
+	border-bottom:solid 1.5px white;
+}
+#static_top > span{
+	display: inline-block;
+	margin-top:5px;
+}
+
+#static_top > form{
+	display: inline-block;
+	margin-left:5%;
+	margin-top:5px;
+	vertical-align: top;
+
+}

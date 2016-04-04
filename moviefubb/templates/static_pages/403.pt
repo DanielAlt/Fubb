@@ -1,0 +1,38 @@
+<metal:macro use-macro="master">
+
+	<metal:slot fill-slot="title">
+	    <title>Fubb | Forbidden</title>
+	</metal:slot>
+
+	<metal:slot fill-slot="fb-meta">
+		<meta property="og:title" content="Fubb | Forbidden"/>
+		<meta property="og:url" content="${request.url}"/>
+	</metal:slot>
+
+	<metal:slot fill-slot='css'>
+		<link rel='stylesheet' type='text/css' media='screen' href='/static/stylesheets/text_pages.css' />
+	</metal:slot>
+
+	<metal:slot fill-slot='script'></metal:slot>
+	<metal:slot fill-slot='description'></metal:slot>
+
+	<metal:slot fill-slot='content'>
+		<div class='scroll_page'>
+			<br />
+			<div class='title_wrapper'>
+				<span class='title_font'>403, Forbidden</span>
+			</div>
+			<br />
+			<div class='text_col'>
+				<br /><br />
+				<img src='/static/images/wallpapers/403.gif' style='width:75%;margin-left: 15%;'class='textcol_img'/>
+				<br />
+				<p class='basic_font'>
+					${message} <br /><br /> 
+				</p>
+				<br /><br /><br /><br />
+			</div>
+		</div>
+	</metal:slot>
+
+</metal:macro>

@@ -1,0 +1,89 @@
+<metal:macro use-macro="master">
+
+	<metal:slot fill-slot="title">
+
+	    <title>Fubb | I Forget</title>
+	
+	</metal:slot>
+
+	<metal:slot fill-slot="fb-meta">
+		<meta property="og:title" content="Fubb | I Forget"/>
+		<meta property="og:url" content="${request.url}"/>
+	</metal:slot>
+
+	<metal:slot fill-slot='css'>
+		<link rel='stylesheet' type='text/css' href='/static/stylesheets/forms.css' />
+		<link rel='stylesheet' type='text/css' href='/static/stylesheets/home.css' />
+	</metal:slot>
+
+	<metal:slot fill-slot='script'>
+		
+	</metal:slot>
+
+	<metal:slot fill-slot='description'>
+		
+	</metal:slot>
+
+	<metal:slot fill-slot='content'>
+
+		<div class='scroll_page'>
+			<br /><br />
+			<!-- TITLE -->			
+			<div class='title_wrapper'>
+				<span class='title_font'>Forgot your Password?</span>
+			</div>
+			<!-- TITLE -->
+			<br /><br />
+
+			<div class='side_box'>				
+				<table>
+					<tbody>
+						<form action='${request.application_url}/forgot' method='post' class='search_form'>
+							<tr>
+								<td>
+									<label>Email:</label>
+								</td>
+								<td>							
+									<input type='text' name='email' class='text_input'/>
+								</td>
+							</tr>
+							<tr>
+								<td></td>
+								<td>
+									<input class='submit_btn' type='submit' name='form.submitted' value='Send Recovery Email' />
+								</td>
+							</tr>
+						</form>
+					</tbody>
+				</table>
+			</div>
+
+			<div class='side_box'>
+				<div class='sidebox_title' style='width:95.5%;'>
+					Message
+				</div>
+				<div id='rules_list' style='width:100%;max-height:90px'>
+					<div tal:condition='python: message is None' >
+						<br /><br />
+						Type your Email into the Form Below
+					</div>
+					<div tal:condition='python: message is not None'>
+						<br /><br />
+						${message}
+					</div>
+				</div>
+			</div>
+			
+			<br /><br />
+
+			<div class='side_box' tal:condition="python: (logged_in) and (user.id==current_user.id)">
+				<p class='basic_font'>
+					You could do this, but you really don't have to. You're logged in. You can change your password by filling out the form <a href='/accounts/${current_user.id}/settings'>Here</a>.
+				</p>
+			</div>
+			<br /><br />
+		</div>
+
+	</metal:slot>
+
+</metal:macro>

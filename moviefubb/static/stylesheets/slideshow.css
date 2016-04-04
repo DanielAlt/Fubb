@@ -1,0 +1,33 @@
+
+/* For Slideshow  */
+.slideshow_box{
+}
+.slideshow_handle{
+	display:inline-block;
+	cursor:pointer;
+	vertical-align: middle;
+}
+#slide_pane{
+	vertical-align: middle;
+	display:inline-block;
+	width:80%;
+	min-height:300px;
+	max-height:200px;
+	border:solid 1.5px black;
+	background-color:black;
+}
+.slide{
+	width:100%;
+}
+.current_slide{
+	display: inline-block;
+	float:right;
+}
+.hidden_slide{
+	display: none;
+}
+.film_strip{
+	width:100%;
+	height:100%;
+}
+

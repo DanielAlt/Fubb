@@ -1,0 +1,61 @@
+<metal:macro use-macro="master">
+
+	<metal:slot fill-slot="title">
+	    <title>Fubb | License</title>
+	</metal:slot>
+
+	<metal:slot fill-slot="fb-meta">
+		<meta property="og:image" content="link/to/image"/>
+		<meta property="og:title" content="Montreal Council 284"/>
+		<meta property="og:url" content="url/path/to/this/page"/>
+		<meta property="og:type" content="blog"/>
+	</metal:slot>
+
+	<metal:slot fill-slot='css'>
+		<link rel='stylesheet' type='text/css' media='screen' href='/static/stylesheets/text_pages.css' />
+	</metal:slot>
+
+	<metal:slot fill-slot='script'>
+		
+	</metal:slot>
+
+	<metal:slot fill-slot='description'>
+		
+	</metal:slot>
+
+	<metal:slot fill-slot='content'>
+		<div class='scroll_page'>
+			<br /><br />
+
+			<div class='title_wrapper'>
+				<span class='title_font'>License</span>
+			</div>
+			
+			<br />
+
+			<div class='text_col'>
+				<p class='basic_font'>
+					Fubb | Cloud Based software for organizing your Movie Collection <br />
+				    Copyright &copy 2016 Daniel Altenburg
+				</p>
+				<p class='basic_font'>
+					This program is free software: you can redistribute it and/or modify
+				    it under the terms of the GNU General Public License as published by
+				    the Free Software Foundation, either version 3 of the License, or
+				    (at your option) any later version.
+				</p>
+				<p class='basic_font'>
+				    This program is distributed in the hope that it will be useful,
+				    but WITHOUT ANY WARRANTY; without even the implied warranty of
+				    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+				    GNU General Public License for more details.
+				</p>
+				<p class='basic_font'>
+				    A copy of the License can be found, <a href='http://www.gnu.org/licenses/gpl-3.0-standalone.html'>
+					here</a>
+				</p>
+			</div>
+		</div>
+	</metal:slot>
+
+</metal:macro>

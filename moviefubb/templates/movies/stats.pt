@@ -1,0 +1,206 @@
+<metal:macro use-macro="master">
+
+	<metal:slot fill-slot="title">
+	    <title>Fubb | Collection Stats</title>
+	</metal:slot>
+
+	<metal:slot fill-slot="fb-meta">
+		<meta property="og:image" content=""/>
+		<meta property="og:title" content="Fubb | Collection Stats"/>
+		<meta property="og:url" content="${request.url}"/>
+	</metal:slot>
+
+	<metal:slot fill-slot='css'>
+		<link rel='stylesheet' type='text/css' media='screen' href='/static/stylesheets/home.css' />
+		<link rel='stylesheet' type='text/css' media='screen' href='/static/stylesheets/stats.css' />
+	</metal:slot>
+
+	<metal:slot fill-slot='script'>
+		<script type='text/javascript' src='/static/javascripts/stats.js'></script>
+	</metal:slot>
+
+	<metal:slot fill-slot='description'>
+		
+	</metal:slot>
+
+	<metal:slot fill-slot='content'>
+		
+		<div class='scroll_page'>
+
+			<br />
+		
+			<!-- TITLE (IF LOGGED IN)-->
+			<div class='title_wrapper'>
+				<span tal:condition='python: logged_in and (user.id==current_user.id)' class='title_font'>
+					My Stats
+					<a title='Return to My Collection' href='/accounts/${user.id}/movies'>
+						<img class='subtab_icon' src='/static/images/icons/arrow_left_icon.png' />
+					</a>
+				</span>
+			</div>
+			<!-- TITLE (IF LOGGED IN)-->
+			
+			<!-- TITLE (IF NOT LOGGED IN) -->				
+			<span tal:condition='python: (not logged_in) or not (user.id==current_user.id)' class='title_font'>
+				${user.username}'s Collection Stats
+				<a title="Return to ${user.username}'s Collection" href='/accounts/${user.id}/movies'>
+					<img class='subtab_icon' src='/static/images/icons/arrow_left_icon.png' />
+				</a>
+			</span>
+			<!-- TITLE (IF NOT LOGGED IN) -->				
+
+			<!-- STATS TABBAR -->
+			<div id='stats_tabbar'>
+				<span class='stats_tabbar_btn' data-tab='genres' title=''>
+					<img src='/static/images/icons/profile_icon.png' class='subtab_icon' />
+					<span class='dissapear_when_small'>
+						Genres
+					</span>
+				</span>
+				<span class='stats_tabbar_btn' data-tab='formats' title=''>
+					<img src='/static/images/icons/movielist_icon.png' class='subtab_icon' />
+					<span class='dissapear_when_small'>
+						Format
+					</span>
+				</span>
+				<span class='stats_tabbar_btn' data-tab='years' title=''>
+					<img src='/static/images/icons/trailer_icon.png' class='subtab_icon' />
+					<span class='dissapear_when_small'>
+						Year
+					</span>
+				</span>
+			</div>
+			<!-- STATS TABBAR -->
+
+			<br /><br />
+
+			<!-- GENRES STATS -->
+			<div id='tabpage_genres' class='tabpage tabpage_active'>
+
+				<div class='side_box'>
+					<canvas id='genres_screen' class='screen'>
+						Your Browser Does not support HTML5 Canvas. Please Download the Latest Version of Mozilla <a href='https://www.mozilla.org/en-US/firefox/desktop/'>Firefox</a> or Google <a href='https://www.google.com/chrome/'>Chrome</a>.
+					</canvas>
+					<br /><br />
+					<a id="download_genre_stats" title="Download Genre Stats Image">
+					    <img src="/static/images/icons/save_icon.png" class='subtab_icon'>
+					</a>
+				</div>
+
+				<div class='side_box'>				
+					<table id='chart_genres' class='chart'>
+						<thead>
+							<tr>
+								<td>Genre Stats</td>
+								<td></td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr tal:repeat='genre total_genres.keys()' class='genres_pair'>
+								<td>${genre}</td>
+								<td>${total_genres[genre]}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class='side_box'>
+					<table class='chart'>
+						<tbody>
+							<tr>
+								<td>Total Movies:</td>
+								<td id='collection_size'>${collection_size}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+			</div>
+			<!-- GENRES STATS -->
+
+			<!-- FORMAT STATS -->
+			<div id='tabpage_formats' class='tabpage tabpage_hidden'>
+				<div class='side_box'>
+					<canvas id='formats_screen' class='screen'>
+						Your Browser Does not support HTML5 Canvas. Please Download the Latest Version of Mozilla <a href='https://www.mozilla.org/en-US/firefox/desktop/'>Firefox</a> or Google <a href='https://www.google.com/chrome/'>Chrome</a>.
+					</canvas>
+					<br /><br />
+					<a id="download_format_stats" title="Download Format Stats Image">
+					    <img src="/static/images/icons/save_icon.png" class='subtab_icon'>
+					</a>
+				</div>
+				<div class='side_box'>
+					<table id='chart_formats' class='chart'>
+						<thead>
+							<tr>
+								<td>Format Stats</td>
+								<td></td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr tal:repeat='format total_formats.keys()' class='formats_pair'>
+								<td>${format}</td>
+								<td>${total_formats[format]}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class='side_box'>
+					<table class='chart'>
+						<tbody>
+							<tr>
+								<td>Total Movies:</td>
+								<td id='collection_size'>${collection_size}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+			</div>
+			<!-- FORMAT STATS -->			
+
+			<!-- YEARS STATS -->
+			<div id='tabpage_years' class='tabpage tabpage_hidden'>
+				<div class='side_box'>
+					<canvas id='years_screen' class='screen'>
+						Your Browser Does not support HTML5 Canvas. Please Download the Latest Version of Mozilla <a href='https://www.mozilla.org/en-US/firefox/desktop/'>Firefox</a> or Google <a href='https://www.google.com/chrome/'>Chrome</a>.
+					</canvas>
+					<br /><br />
+					<a id="download_year_stats" title="Download Year Stats Image">
+					    <img src="/static/images/icons/save_icon.png" class='subtab_icon'>
+					</a>
+				</div>
+				<div class='side_box'>
+					<table id='chart_years' class='chart'>
+						<thead>
+							<tr>
+								<td>Year Stats</td>
+								<td></td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr tal:repeat='decade total_decades.keys()' class='years_pair'>
+								<td>${decade}</td>
+								<td>${total_decades[decade]}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class='side_box'>
+					<table class='chart'>
+						<tbody>
+							<tr>
+								<td>Total Movies:</td>
+								<td id='collection_size'>${collection_size}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<!-- YEARS STATS -->
+
+			<br /><br />
+
+		</div>
+	</metal:slot>
+
+</metal:macro>

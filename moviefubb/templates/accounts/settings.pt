@@ -1,0 +1,425 @@
+<metal:macro use-macro="master">
+
+	<metal:slot fill-slot="title">
+	    <title>Fubb | ${user.username}'s Account Settings</title>
+	</metal:slot>
+
+	<metal:slot fill-slot="fb-meta">
+		<meta property="og:image" content=""/>
+		<meta property="og:title" content="Fubb | ${user.username}'s Account Settings"/>
+		<meta property="og:url" content="${request.application_url}/accounts/${user.id}/edit"/>
+	</metal:slot>
+
+	<metal:slot fill-slot='css'>
+		<link rel='stylesheet' type='text/css' media='screen' href='/static/stylesheets/account_settings.css' />
+		<link rel='stylesheet' type='text/css' media='screen' href='/static/stylesheets/forms.css' />
+		<link rel='stylesheet' type='text/css' media='screen' href='/static/stylesheets/home.css' />
+	</metal:slot>
+
+	<metal:slot fill-slot='script'>
+		<script type='text/javascript' src='/static/javascripts/settings.js'></script>
+		<script type='text/javascript' src='/static/javascripts/validate_usersettings.js'></script>
+	</metal:slot>
+
+	<metal:slot fill-slot='description'>
+	</metal:slot>
+
+	<metal:slot fill-slot='content'>		
+
+		<div class='scroll_page' tal:condition='python: (user.id == current_user.id)'>
+			
+			<br />
+			<!-- PAGE TITLE -->
+			<div class='title_wrapper'>
+				<span class='title_font'>
+					My Account Settings
+					<a href='${request.application_url}/accounts/${user.id}' title='Use this button to return to your Profile Page'>
+						<img class='subtab_icon' src='/static/images/icons/arrow_left_icon.png' />
+					</a>
+				</span>
+			</div>
+			<!-- PAGE TITLE -->
+
+			<!-- NOTIFICATION MESSAGES -->	
+			<div id='notification_message'>
+				<span tal:condition="python: not (message == '')" class='sub_title_font'>
+					${message}
+				</span>
+			</div>
+			<!-- NOTIFICATION MESSAGES -->	
+
+			<!-- SETTINGS TAB BAR -->			
+			<div id='settings_tabbar'>
+				<span class='settings_tabbar_btn' data-tab='core' title='Click here Update your Core Account Information: Email, Password, Username...'>
+					<img src='/static/images/icons/settings_icon.png' class='subtab_icon' />
+					<span class='dissapear_when_small'>
+						Core
+					</span>
+				</span>
+				<span class='settings_tabbar_btn' data-tab='profile' title='Click here to Update your Profile Favourites: Favourite Show, Favourite Film, Facourite, Genre...'>
+					<img src='/static/images/icons/profile_icon.png' class='subtab_icon' />
+					<span class='dissapear_when_small'>
+						Profile
+					</span>
+				</span>
+				<span class='settings_tabbar_btn' data-tab='privacy' title='Click here to Update your Profile Privacy Settings...'>
+					<img src='/static/images/icons/key.png' class='subtab_icon' />
+					<span class='dissapear_when_small'>
+						Privacy
+					</span>
+				</span>
+				<span class='settings_tabbar_btn' data-tab='danger' title='Click here to Access Destructive Actions: Delete your account...'>
+					<img src='/static/images/icons/warning_icon.png' class='subtab_icon' />
+					<span class='dissapear_when_small'>
+						Destructive
+					</span>
+				</span>
+			</div>
+			<!-- SETTINGS TAB BAR -->			
+
+			<br /><br />
+
+			<!-- CORE FORM-->
+			<div id='tabpage_core' class='tabpage tabpage_active'>
+				<div class='side_box'>
+					<!-- Core Information FORM -->
+					<table class='signup_form'>
+						<thead>
+							<tr>
+								<td></td>
+								<td><span class='sub_title_font'>Basic Information</span></td>
+							</tr>
+						</thead>
+						<tbody>
+							<form action='${request.application_url}/accounts/${user.id}/settings' method='post'>
+								<tr>
+									<td class='label_slot'><label>Username: </label></td>
+									<td><input type='text' class='text_input' name='username' value='${user.username}'/></td>
+								</tr>
+								<tr>
+									<td class='label_slot'><label>Email: </label></td>
+									<td><input type='email' class='text_input' name='email' value='${user.email}' /></td>
+								</tr>
+								<tr>
+									<td class='label_slot'><label>Password: </label></td>
+									<td><input id='psswd' type='password' class='text_input' name='password' /></td>
+								</tr>
+								<tr>
+									<td class='label_slot'><label>Confirm Password: </label></td>
+									<td><input type='password' class='text_input' name='password_confirm' /></td>
+								</tr>
+								<tr>
+									<td></td>
+									<td><input type='submit' value='Update Info' class='submit_btn' name='core.submitted' /></td>
+								</tr>
+							</form>
+						</tbody>
+					</table>
+				</div>
+				<!-- Core Information FORM -->
+				<div class='side_box dissapear_when_small'>
+					<div class='sidebox_title'>
+						Core Information
+					</div>
+					<ul id='rules_list'>
+						<br />
+						<li id='username_rule'>
+							Your Username Must be more than 2, and less than 75 Characters in length. 
+						</li>
+						<li id='email_rule'>
+							You must use a valid email.  
+						</li>
+						<li id='password'>
+							Your Password Must be a minimum of 8 characters, and less than 32 characters.
+						</li>
+					</ul>
+				</div>
+				<div style='clear:both'></div>
+			</div>
+			<!-- CORE FORM-->
+
+			<!-- PROFILE FORM-->
+			<div id='tabpage_profile' class='tabpage tabpage_hidden'>
+				<div class='side_box'>
+					<!-- Profile Info Form -->
+					<table>
+						<thead>
+							<tr>
+								<td></td>
+								<td><span class='sub_title_font'>Profile Favorites</span></td>
+							</tr>
+						</thead>
+						<tbody>
+							<form tal:condition='python: (user.profile is not None)' action='${request.application_url}/accounts/${user.id}/settings' method='post'>
+								<tr>
+									<td class='label_slot'><label>Favorite Film</label></td>
+									<td>
+										<input value='${user.profile.fav_film}' type='text' class='text_input' name='fav_film' placeholder="What's your favorite Film? "/>
+									</td>
+								</tr>
+								<tr>
+									<td class='label_slot'><label>Favorite Show</label></td>
+									<td>
+										<input value='${user.profile.fav_show}' type='text' class='text_input' name='fav_show' placeholder="What's your favorite Show?" />
+									</td>
+								</tr>
+								<tr>
+									<td class='label_slot'><label>Favorite Genre</label></td>
+									<td>
+										<input value='${user.profile.fav_genre}' type='text' class='text_input' name='fav_genre' placeholder="What's your favorite Genre?" />
+									</td>
+								</tr>
+								<tr>
+									<td class='label_slot'><label>About Me</label></td>
+									<td>
+										<textarea name='about_me' class='textarea_input' placeholder='Type a breif description of yourself'>${user.profile.about_me}</textarea>
+									</td>
+								</tr>
+								<tr>
+									<td></td>
+									<td>
+										<input class='submit_btn' type='submit' value='Update my Profile' name='profile.submitted'/>
+									</td>
+								</tr>
+							</form>
+							<form tal:condition='python: (user.profile is None)' action='${request.application_url}/accounts/${user.id}/settings' method='post'>
+								<tr>
+									<td class='label_slot'><label>Favorite Film</label></td>
+									<td>
+										<input type='text' class='text_input' name='fav_film' placeholder="What's your favorite Film? "/>
+									</td>
+								</tr>
+								<tr>
+									<td class='label_slot'><label>Favorite Show</label></td>
+									<td>
+										<input type='text' class='text_input' name='fav_show' placeholder="What's your favorite Show?" />
+									</td>
+								</tr>
+								<tr>
+									<td class='label_slot'><label>Favorite Genre</label></td>
+									<td>
+										<input type='text' class='text_input' name='fav_genre' placeholder="What's your favorite Genre?" />
+									</td>
+								</tr>
+								<tr>
+									<td class='label_slot'><label>About Me</label></td>
+									<td>
+										<textarea name='about_me' class='textarea_input' placeholder='Type a breif description of yourself'></textarea>
+									</td>
+								</tr>
+								<tr>
+									<td></td>
+									<td>
+										<input class='submit_btn' type='submit' value='Update my Profile' name='profile.submitted'/>
+									</td>
+								</tr>
+							</form>
+						</tbody>
+					</table>
+					<!-- Profile Info Form -->
+				</div>
+
+				<div class='side_box dissapear_when_small'>
+					<div class='sidebox_title'>
+						Your Profile Favourites
+					</div>
+					<ul id='rules_list'>
+						<br />
+						<li id='username_rule'>
+							Your Username Must be more than 2, and less than 75 Characters in length. 
+						</li>
+						<li id='email_rule'>
+							You must use a valid email.  
+						</li>
+						<li id='password'>
+							Your Password Must be a minimum of 8 characters, and less than 32 characters.
+						</li>
+					</ul>
+				</div>
+			</div>
+			<!-- PROFILE FORM-->
+
+			<!-- PRIVACY FORM-->
+			<div id='tabpage_privacy' class='tabpage tabpage_hidden'>
+
+				<div class='side_box'>
+					<!-- PRIVACY SETTINGS FORM -->
+					<table>
+						<thead>
+							<tr>
+								<td></td>
+								<td><span class='sub_title_font'>Privacy Settings</span></td>
+							</tr>
+						</thead>
+						<tbody>
+							<form method='post' action='${request.application_url}/accounts/${user.id}/settings'>
+								<tr>
+									<td class='label_slot'><label>Show Stats</label></td>
+									<td>
+										<select tal:condition='python: (privacy_form["show_stats"]=="anyone")' name='show_stats' class='dropdown_input'>
+											<option value='anyone'>Allow Anyone to View</option>
+											<option value='fubbusers'>Only allow Fubb Users to View</option>
+											<option value='friends'>Only allow friends to View</option>
+											<option value='onlyme'>Only allow me to View</option>
+										</select>
+										<select tal:condition='python: (privacy_form["show_stats"]=="fubbusers")' name='show_stats' class='dropdown_input'>
+											<option value='fubbusers'>Only allow Fubb Users to View</option>
+											<option value='anyone'>Allow Anyone to View</option>
+											<option value='friends'>Only allow friends to View</option>
+											<option value='onlyme'>Only allow me to View</option>
+										</select>
+										<select tal:condition='python: (privacy_form["show_stats"]=="onlyme")' name='show_stats' class='dropdown_input'>
+											<option value='onlyme'>Only allow me to View</option>
+											<option value='fubbusers'>Only allow Fubb Users to View</option>
+											<option value='anyone'>Allow Anyone to View</option>
+											<option value='friends'>Only allow friends to View</option>
+										</select>
+										<select tal:condition='python: (privacy_form["show_stats"]=="friends")' name='show_stats' class='dropdown_input'>
+											<option value='friends'>Only allow friends to View</option>
+											<option value='anyone'>Allow Anyone to View</option>
+											<option value='fubbusers'>Only allow Fubb Users to View</option>
+											<option value='onlyme'>Only allow me to View</option>
+										</select>
+										<select tal:condition='python: (privacy_form["show_stats"]==None)' name='show_stats' class='dropdown_input'>
+											<option value='anyone'>Allow Anyone to View</option>
+											<option value='friends'>Only allow friends to View</option>
+											<option value='fubbusers'>Only allow Fubb Users to View</option>
+											<option value='onlyme'>Only allow me to View</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td class='label_slot'><label>Show Profile</label></td>
+									<td>
+										<select tal:condition='python: (privacy_form["show_profile"]=="anyone")' name='show_profile' class='dropdown_input'>
+											<option value='anyone'>Allow Anyone to View</option>
+											<option value='fubbusers'>Only allow Fubb Users to View</option>
+											<option value='friends'>Only allow friends to View</option>
+											<option value='onlyme'>Only allow me to View</option>
+										</select>
+										<select tal:condition='python: (privacy_form["show_profile"]=="fubbusers")' name='show_profile' class='dropdown_input'>
+											<option value='fubbusers'>Only allow Fubb Users to View</option>
+											<option value='anyone'>Allow Anyone to View</option>
+											<option value='friends'>Only allow friends to View</option>
+											<option value='onlyme'>Only allow me to View</option>
+										</select>
+										<select tal:condition='python: (privacy_form["show_profile"]=="onlyme")' name='show_profile' class='dropdown_input'>
+											<option value='onlyme'>Only allow me to View</option>
+											<option value='fubbusers'>Only allow Fubb Users to View</option>
+											<option value='anyone'>Allow Anyone to View</option>
+											<option value='friends'>Only allow friends to View</option>
+										</select>
+										<select tal:condition='python: (privacy_form["show_profile"]=="friends")' name='show_profile' class='dropdown_input'>
+											<option value='friends'>Only allow friends to View</option>
+											<option value='anyone'>Allow Anyone to View</option>
+											<option value='fubbusers'>Only allow Fubb Users to View</option>
+											<option value='onlyme'>Only allow me to View</option>
+										</select>
+										<select tal:condition='python: (privacy_form["show_profile"]==None)' name='show_profile' class='dropdown_input'>
+											<option value='anyone'>Allow Anyone to View</option>
+											<option value='friends'>Only allow friends to View</option>
+											<option value='fubbusers'>Only allow Fubb Users to View</option>
+											<option value='onlyme'>Only allow me to View</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td class='label_slot'><label>Show Collection</label></td>
+									<td>
+										<select tal:condition='python: (privacy_form["show_collection"]=="anyone")' name='show_collection' class='dropdown_input'>
+											<option value='anyone'>Allow Anyone to View</option>
+											<option value='fubbusers'>Only allow Fubb Users to View</option>
+											<option value='friends'>Only allow friends to View</option>
+											<option value='onlyme'>Only allow me to View</option>
+										</select>
+										<select tal:condition='python: (privacy_form["show_collection"]=="fubbusers")' name='show_collection' class='dropdown_input'>
+											<option value='fubbusers'>Only allow Fubb Users to View</option>
+											<option value='anyone'>Allow Anyone to View</option>
+											<option value='friends'>Only allow friends to View</option>
+											<option value='onlyme'>Only allow me to View</option>
+										</select>
+										<select tal:condition='python: (privacy_form["show_collection"]=="onlyme")' name='show_collection' class='dropdown_input'>
+											<option value='onlyme'>Only allow me to View</option>
+											<option value='fubbusers'>Only allow Fubb Users to View</option>
+											<option value='anyone'>Allow Anyone to View</option>
+											<option value='friends'>Only allow friends to View</option>
+										</select>
+										<select tal:condition='python: (privacy_form["show_collection"]=="friends")' name='show_collection' class='dropdown_input'>
+											<option value='friends'>Only allow friends to View</option>
+											<option value='anyone'>Allow Anyone to View</option>
+											<option value='fubbusers'>Only allow Fubb Users to View</option>
+											<option value='onlyme'>Only allow me to View</option>
+										</select>
+										<select tal:condition='python: (privacy_form["show_collection"]==None)' name='show_profile' class='dropdown_input'>
+											<option value='anyone'>Allow Anyone to View</option>
+											<option value='friends'>Only allow friends to View</option>
+											<option value='fubbusers'>Only allow Fubb Users to View</option>
+											<option value='onlyme'>Only allow me to View</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td></td>
+									<td><input type='submit' value='Update Privacy Settings' class='submit_btn' name='privacy.submitted' /></td>
+								</tr>
+							</form>
+						</tbody>
+					</table>
+				</div>
+
+				<!-- PRIVACY SETTINGS FORM -->
+				<div class='side_box dissapear_when_small'>
+					<div class='sidebox_title'>
+						Account Privacy
+					</div>
+					<ul id='rules_list'>
+						<br />
+						<p>
+							It is important to us, that you only display the information about yourself that you want to display. These privacy options will allow you to customize who get's to see which parts of your account. 
+						</p>
+					</ul>
+				</div>
+			</div>
+			<!-- PRIVACY FORM-->
+
+			<!-- DANGER FORM-->
+			<div id='tabpage_danger' class='tabpage tabpage_hidden'>
+				<div class='side_box'>
+					<table style='width:100%;'>
+						<thead>
+							<tr>
+								<td></td>
+								<td><span class='sub_title_font'>The Danger Zone</span></td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td></td>
+								<td>
+									<input type='button' value='Delete Your Fubb Account' class='destructive_btn' data-URL='/accounts/${user.id}/delete' data-user='${user.username}' />
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class='side_box dissapear_when_small'>
+					<div class='sidebox_title'>
+						Destructive Actions
+					</div>
+					<ul id='rules_list'>
+						<br />
+						<p>
+							Be careful what you change in this section. Deleting a User is a permanent Action, and Accounts can not be recovered after deletion. 
+						</p>
+					</ul>
+				</div>
+			</div>
+			<!-- DANGER FORM-->
+
+			<br /><br />
+			<br /><br />
+		</div>
+		<div style='display:none' data-form='${last_form}' id='last_form'></div>
+	</metal:slot>
+
+</metal:macro>

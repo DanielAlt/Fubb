@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<style type='text/css'>
+			p{
+				font-size: 13pt;
+			}
+			body{
+				background-color:red;
+			}
+			#msg_content{
+				width:80%;
+				margin-left:10%;
+				margin-right: 10%;
+				padding:15px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id='msg_content'>
+			<h2 id='msg_header'>
+				Thank you for Joining Fubb, $username !
+			</h2>
+			<br /><br />
+			<p>
+				We're really happy that you joined the Club :D ! <br /><br />
+				Please take a few moments to confirm your account by clicking the link below, 
+				<br /><br />
+
+				<a href='$application_name/accounts/$user_id/confirm/$confirmation_string'>
+					$application_name/accounts/$user_id/confirm/$confirmation_string
+				</a>
+				<br /><br />
+				You're just a click away from a collection that will wow your friends, and strike fear into the hearts of your enemies. 
+			</p>
+			<small>Does this not sound familiar? If you beleive you have received this email in error, no action will be required on your part. Delete the email if you'd like.</small>
+		</div>
+
+	</body>
+</html>

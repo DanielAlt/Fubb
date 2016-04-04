@@ -1,0 +1,261 @@
+<metal:macro use-macro="master">
+
+	<metal:slot fill-slot="title">
+
+	    <title>Fubb | All Movie Trailers</title>
+	
+	</metal:slot>
+
+	<metal:slot fill-slot="fb-meta">
+		<meta property="og:title" content="Fubb | All Movie Trailers"/>
+		<meta property="og:url" content="${request.url}"/>
+	</metal:slot>
+
+	<metal:slot fill-slot='css'>
+		<link rel='stylesheet' type='text/css' media='screen' href='/static/stylesheets/trailers.css' />
+		<link rel='stylesheet' type='text/css' media='screen' href='/static/stylesheets/index.css' />
+		<link rel='stylesheet' type='text/css' media='screen' href='/static/stylesheets/forms.css' />
+	</metal:slot>
+
+	<metal:slot fill-slot='script'>
+		<script type='text/javascript' src='/static/javascripts/movies.js'></script>
+		<script type='text/javascript' src='/static/javascripts/index.js'></script>
+		<script type='text/javascript' src='/static/javascripts/search_form.js'></script>
+	</metal:slot>
+
+	<metal:slot fill-slot='description'>
+		
+	</metal:slot>
+
+	<metal:slot fill-slot='content'>
+
+		<!-- TOOLBAR -->
+		<div  id='static_top'>
+			<span class='title_font'>
+				All Movie Trailers
+			</span>
+			<span style='float:right;'>
+				<img id='list_view' class='view_btn' data-viewbutton='list' title='List View' src='/static/images/icons/listview_icon.png' />
+				<img id='window_view' class='view_btn' data-viewbutton='window' title='Window View' src='/static/images/icons/windowview_icon.png' />
+				<img id='details_view' class='view_btn' data-viewbutton='details' title='Details View' src='/static/images/icons/detailsview_icon.png' />
+			</span>
+		</div>
+		<!-- TOOLBAR -->
+
+		<div class='scroll_page'>
+			
+			<br /><br />
+			<br /><br />
+			
+			<!-- SEARCH FORM -->
+			<form method='get' class='search_form' action='${request.application_url}/trailers'>
+				<input type='text' name='query' value='${page_args["query"]}' placeholder='Type a search query' />
+				<select name='orderby' value='${page_args["orderby"]}' >
+					<option value=''>Order By</option>
+					<option value='title'>Title</option>
+					<option value='year'>Year</option>
+					<option value='genre_tags'>Genres</option>
+					<option value='director'>Director</option>
+					<option value='writer'>Writer</option>
+					<option value='imdb_rating'>IMDB Rating</option>
+					<option value='imdb_votes'>IMDB Votes</option>
+					<option value='runtime'>Runtime</option>
+				</select>
+				<input type='submit' value='Search' />
+				<br />
+				<small id='uncollapse_advanced'>Advanced search options</small>
+				<div id='advanced_search'>
+					<table>
+						<tbody>
+							<tr>
+								<td><label class='small_label'>Results/Page</label></td>
+								<td><label class='small_label'>Search by</label></td>
+								<td><label class='small_label'>View</label></td>
+							</tr>
+							<tr>
+								<td>
+									<input name='results' value='${page_args["results"]}' type='number' min='1' max='250' step='1' />
+								</td>
+								<td>					
+									<select name='filterby'>
+										<option value='title'>Title</option>
+										<option value='year'>Year</option>
+										<option value='genre_tags'>Genres</option>
+										<option value='director'>Director</option>
+										<option value='writer'>Writer</option>
+									</select>
+								</td>
+								<td>
+									<select name='view'>
+										<option value='details'>Details</option>
+										<option value='window'>Window</option>
+										<option value='list'>List</option>
+									</select>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<br />
+				</div>
+			</form>
+			<!-- SEARCH FORM -->
+
+			<br /><br />
+
+			<!-- TEXT FOR SEARCH RESULTS -->			
+			<div tal:condition='python: (page_args["query"] is not None)' style='margin-left:2.5%;'>
+				<div tal:condition='python: (len(all_embeds) == 0)'>
+					<br />
+					<span class='sub_title_font'>
+						No results found for, "${page_args['query']}".
+					</span>
+					<p class='basic_font'>
+						Click <a href='${request.application_url}/trailers'>here</a> to return to the full collection.
+					</p>
+				</div>
+
+				<span tal:condition='python: (len(all_embeds) > 0)'>
+					<br />
+					${len(all_embeds)} Results for, "${page_args['query']}"
+				</span>
+			</div>
+			<!-- TEXT FOR SEARCH RESULTS -->
+
+			<!-- PAGINATION CONTROLS -->
+			<div tal:condition="python: (pagination['number_of_pages'] > 0)" class='pagination_controls'>
+				<ul>
+					<li tal:condition='python: (pagination["prev_page"] >= 0)'>
+						<a href='${request.application_url}/trailers?&query=${page_args["query"]}&orderby=${page_args["orderby"]}&view=${page_args["view"]}&page=${pagination["prev_page"]}&results=${pagination["results"]}'>
+							<- Previous
+						</a>
+					</li>
+					<li tal:repeat='x pagination["page_list"]'>
+						<div tal:condition='python: (x == pagination["current_page"])'>
+							<a class='paginator-current_page' href='${request.application_url}/trailers?&query=${page_args["query"]}&view=${page_args["view"]}&orderby=${page_args["orderby"]}&page=${x}&results=${pagination["results"]}'>
+								${x}
+							</a>
+						</div>
+						<div tal:condition='python: not (x == pagination["current_page"])' >
+							<a class='paginator-inactive_page' href='${request.application_url}/trailers?&query=${page_args["query"]}&orderby=${page_args["orderby"]}&view=${page_args["view"]}&page=${x}&results=${pagination["results"]}'>
+								${x}
+							</a>
+						</div>
+					</li>
+					<li tal:condition='python: (pagination["next_page"] <= pagination["number_of_pages"]-1)' >
+						<a href='${request.application_url}/trailers?&query=${page_args["query"]}&orderby=${page_args["orderby"]}&view=${page_args["view"]}&page=${pagination["next_page"]}&results=${pagination["results"]}'>
+							Next ->
+						</a>
+					</li>
+				</ul>
+			</div>
+			<!-- PAGINATION CONTROLS -->
+
+			<!-- LIST VIEW  -->
+			<div id='list_view_page' class='hidden_page'>
+				<table>
+					<thead>
+						<tr>
+							<td>
+								<span class='sub_title_font'>Title</span>
+							</td>
+							<td>
+								<span class='sub_title_font'>Genre</span>
+							</td>
+							<td>
+								<span class='sub_title_font'>Year</span>
+							</td>
+							<td>
+								<span class='sub_title_font'>Language</span>
+							</td>
+						</tr>
+					</thead>
+					<tbody>
+						<tr tal:repeat="movie all_embeds">
+							<td id='movie_${movie.id}'><a href='/trailers/${movie.embed}'>${movie.title}</a></td>
+							<td id='movie_${movie.id}_genres'>${movie.genre_tags}</td>
+							<td id='movie_${movie.id}_year'>${movie.year}</td>
+							<td id='movie_${movie.id}_language'>${movie.language}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<!-- LIST VIEW -->
+
+			<!-- WINDOW VIEW -->
+			<div id='window_view_page' class='hidden_page'>
+				<div tal:repeat='movie all_embeds'>
+					<a href='/trailers/${movie.embed}'>
+						<img id='movie_${movie.id}_poster' src='${movie.poster}' class='poster_img' />
+					</a>
+				</div>
+			</div>
+			<!-- WINDOW VIEW -->
+
+			<!-- DETAILS VIEW -->
+			<div id='details_view_page' class='active_page'>
+				<table>
+					<tbody>
+						<tr tal:repeat='movie all_embeds'>
+							<td>
+								<a title='${movie.title}' href='${request.url}/trailers/${movie.embed}'>
+									<img class='poster_img' src='${movie.poster}' />
+								</a>
+							</td>
+							<td>
+								<p class='sub_title_font'>
+									<a href='${request.application_url}/trailers/${movie.embed}'>${movie.title} (${movie.year})</a>
+								</p>
+								<small style='color:white;'>imdb Rating: ${movie.imdb_rating}</small>
+								<p class='basic_font'>
+									${movie.plot}
+								</p>
+								<small style='color:white;'>
+									Runtime: ${movie.runtime}
+								</small>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
+			<!-- PAGINATION CONTROLS -->
+			<div tal:condition="python: (pagination['number_of_pages'] > 0)" class='pagination_controls'>
+				<ul>
+					<li tal:condition='python: (pagination["prev_page"] >= 0)'>
+						<a href='${request.application_url}/trailers/movies?&query=${page_args["query"]}&orderby=${page_args["orderby"]}&view=${page_args["view"]}&page=${pagination["prev_page"]}&results=${pagination["results"]}'>
+							<- Previous
+						</a>
+					</li>
+					<li tal:repeat='x pagination["page_list"]'>
+						<div tal:condition='python: (x == pagination["current_page"])'>
+							<a class='paginator-current_page' href='${request.application_url}/trailers?&query=${page_args["query"]}&view=${page_args["view"]}&orderby=${page_args["orderby"]}&page=${x}&results=${pagination["results"]}'>
+								${x}
+							</a>
+						</div>
+						<div tal:condition='python: not (x == pagination["current_page"])' >
+							<a class='paginator-inactive_page' href='${request.application_url}/trailers/movies?&query=${page_args["query"]}&orderby=${page_args["orderby"]}&view=${page_args["view"]}&page=${x}&results=${pagination["results"]}'>
+								${x}
+							</a>
+						</div>
+					</li>
+					<li tal:condition='python: (pagination["next_page"] <= pagination["number_of_pages"]-1)' >
+						<a href='${request.application_url}/trailers?&query=${page_args["query"]}&orderby=${page_args["orderby"]}&view=${page_args["view"]}&page=${pagination["next_page"]}&results=${pagination["results"]}'>
+							Next ->
+						</a>
+					</li>
+				</ul>
+			</div>
+			<!-- PAGINATION CONTROLS -->
+
+			<p class='pagination_controls basic_font'><a href='#' style='margin-left: 2.5%;color:white;'>Back to Top</a></p>
+
+			<!-- Data that I reluctantly pass to JS from URL via Markup -->
+			<div id='view_mode' class='hidden_page' data-currentview='${page_args["view"]}'></div>
+			<!-- Data that I reluctantly pass to JS from URL via Markup -->
+
+
+		</div>
+
+	</metal:slot>
+
+</metal:macro>

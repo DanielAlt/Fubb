@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="${request.locale_name}">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta 
+      name="description" 
+      content="Fubb is the best way to organize your physical movie collection. Our army of tiny robots will get all the info on your movies, just enter the title of the film you want to add, and we'll do the rest. Don't forget to share reccomendations of your collection with your friends" 
+    />
+    <!-- CROSS PLATFORM FAVICONS -->
+    <link rel="apple-touch-icon" sizes="57x57" href="/static/images/favicons/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/static/images/favicons/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/static/images/favicons/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/static/images/favicons/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/static/images/favicons/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/static/images/favicons/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/static/images/favicons/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/static/images/favicons/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/static/images/favicons/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192"  href="/static/images/favicons/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/images/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/static/images/favicons/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/static/images/favicons/favicon-16x16.png">
+    <link rel="manifest" href="/static/images/favicons/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/static/images/favicons/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+    <!-- CROSS PLATFORM FAVICONS -->
+
+    <!-- FOR FACEBOOK -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Fubb" />
+    <metal:slot metal:define-slot="fb-meta" />
+    <meta property='fb:app_id' content='1073304142727007' />    
+
+    <!-- FOR FACEBOOK -->
+
+    <title metal:define-slot="title" tal:content="context/title | python:None">Movie Fubb</title>
+
+    <!-- STYLESHEETS -->
+    <link rel='stylesheet' type='text/css' media='screen' href='/static/stylesheets/loading_bar.css' />
+    <link rel='stylesheet' type='text/css' media='screen' href='/static/stylesheets/global.css' />
+    <metal:slot metal:define-slot="css" />
+    <!-- STYLESHEETS -->
+
+    <!-- JAVASCRIPTS -->
+    <script type='text/javascript' src='/static/javascripts/jquery.min.js'></script>
+    <script type='text/javascript' src='/static/javascripts/pace.js'></script>
+    <script type='text/javascript' src='/static/javascripts/modernizr.js'></script>
+    <script type='text/javascript' src='/static/javascripts/global.js'></script>
+    <metal:slot metal:define-slot="script" />
+    <!-- JAVASCRIPTS -->
+  </head>
+
+  <body>
+    <!-- SCRIPT FOR FACEBOOK API -->
+    <script>
+      window.fbAsyncInit = function() {
+        FB.init({
+          appId      : '1073304142727007',
+          xfbml      : true,
+          version    : 'v2.5'
+        });
+      };
+
+      (function(d, s, id){
+         var js, fjs = d.getElementsByTagName(s)[0];
+         if (d.getElementById(id)) {return;}
+         js = d.createElement(s); js.id = id;
+         js.src = "//connect.facebook.net/en_US/sdk.js";
+         fjs.parentNode.insertBefore(js, fjs);
+       }(document, 'script', 'facebook-jssdk'));
+    </script>
+    <!-- SCRIPT FOR FACEBOOK API -->
+
+    <div id='page_content'>
+
+      <!-- TAB BAR START -->
+      <div id='tab_bar'>
+
+        <div class='tab'  data-tab='home' id='tab_home' title='Home'>
+          <a href='/'>
+            <img src='/static/images/icons/home_icon.png' class='tab_icon' />
+          </a>
+        </div>
+
+        <div tal:condition='python: logged_in' class='tab' title='Movie List'>
+          <a href='/accounts/${current_user.id}/movies'>
+            <img src='/static/images/icons/movielist_icon.png' class='tab_icon' />
+          </a>
+          <ul class='hover_menu'>
+            <li>
+              <span>
+                <a href='/accounts/${current_user.id}/movies'>
+                  <img src='/static/images/icons/movielist_icon.png' class='subtab_icon' />
+                </a>
+                <a href='/accounts/${current_user.id}/movies'>My Collection</a>
+              </span>
+            </li>
+            <li>
+              <span>  
+                <a href='/accounts/${current_user.id}/movies/add'>
+                  <img src='/static/images/icons/addmovie_icon.png' class='subtab_icon' />
+                </a>
+                <a href='/accounts/${current_user.id}/movies/add'>Add Movie</a>
+              </span>
+            </li>
+            <li>
+              <span>
+                <a href='/accounts/${current_user.id}/movies/stats'>
+                  <img src='/static/images/icons/stats_icon.png' class='subtab_icon' />
+                </a>
+                <a href='/accounts/${current_user.id}/movies/stats'>Stats</a>
+              </span>
+            </li>
+            <!-- <li><a href='/accounts/${current_user.id}/movies/random'>Random Movie</a></li> -->
+          </ul>
+        </div>
+
+        <div tal:condition='python: logged_in' class='tab' title='Profile'>
+          <a href='/accounts/${current_user.username}'>
+            <img src='/static/images/icons/profile_icon.png' class='tab_icon' />
+          </a>
+          <ul class='hover_menu'>
+            
+            <li>
+              <span>
+                <a href='/accounts/${current_user.id}'>
+                  <img src='/static/images/icons/profile_icon.png' class='subtab_icon' />
+                </a>
+                <a href='/accounts/${current_user.id}'>My Profile</a>
+              </span>
+            </li>
+            <li>
+              <span>
+                <a href='/accounts'>
+                  <img src='/static/images/icons/userindex_icon.png' class='subtab_icon' />
+                </a>
+                <a href='/accounts'>Find a Profile</a>
+              </span>
+            </li>
+            <li>
+              <span>
+                <a href='/accounts/${current_user.id}/settings'>
+                  <img src='/static/images/icons/settings_icon.png' class='subtab_icon' />
+                </a>
+                <a href='/accounts/${current_user.id}/settings'>Settings</a>
+              </span>
+            </li>
+            <li>
+              <span>
+                <a href='/logout'>
+                  <img src='/static/images/icons/key.png' class='subtab_icon' />
+                </a>
+                <a href='/logout'>Logout</a>
+              </span>
+            </li>
+
+          </ul>
+        </div>
+
+        <div class='tab' title='Watch Trailers'>
+          <a href='/trailers'>
+            <img src='/static/images/icons/trailer_icon.png' class='tab_icon' />
+          </a>
+          <ul class='hover_menu'>
+            <li>
+              <span>
+                <a href='${request.application_url}/trailers'>
+                  <img src='/static/images/icons/trailer_icon.png' class='subtab_icon' />
+                </a>
+                <a href='${request.application_url}/trailers'>All Trailers</a>
+              </span>
+            </li>
+            <li>
+              <span>
+                <a href='${request.application_url}/trailers/random'>
+                  <img src='/static/images/icons/random_icon.png' class='subtab_icon' />
+                </a>
+                <a href='${request.application_url}/trailers/random'>Random Trailer</a>
+              </span>
+            </li>
+          </ul>
+        </div>
+
+        <div class='tab' title='Fubb Help'>
+          <a href='/help'>
+            <img src='/static/images/icons/help_icon.png' class='tab_icon' />
+          </a>
+          <ul class='hover_menu'>
+            <li>
+              <span>
+                <a href='${request.application_url}/about'>
+                  <img src='/static/images/icons/about_icon.png' class='subtab_icon' />
+                </a>
+                <a href='/about'>About Fubb</a>
+              </span>
+            </li>
+            <li>
+              <span>
+                <a href='/help'>
+                  <img src='/static/images/icons/help_icon.png' class='subtab_icon' />
+                </a>
+                <a href='/help'>The Help Desk</a>
+              </span>
+            </li>
+          </ul>
+        </div>
+
+        <div tal:condition='python: not logged_in' class='tab' title='Log In'>
+          <a href='${request.application_url}/login'>
+            <img src='/static/images/icons/key.png' class='tab_icon' /> 
+          </a>
+
+          <ul class='hover_menu'>     
+            <li>
+              <span>
+                <a href='${request.application_url}/login'>
+                  <img src='/static/images/icons/key.png' class='subtab_icon' />
+                </a>
+                <a href='${request.application_url}/login'>Login</a>
+              </span>
+            </li>
+            <li>
+              <span>
+                <a href='${request.application_url}/signup'>
+                  <img src='/static/images/icons/signup_icon.png' class='subtab_icon' />
+                </a>
+                <a href='${request.application_url}/signup'>Signup</a>
+              </span>
+            </li>
+          </ul>
+
+        </div>
+      </div>
+      <!-- TAB BAR END -->
+
+      <!-- CONTENT -->
+      <div id='content_wrapper'>
+        <div id='content_page'>
+          <metal:slot metal:define-slot='content' />
+        </div>
+      </div>
+      <!-- CONTENT END -->
+
+      <!-- FOOTER START -->
+      <div id='footer'>
+        <ul>
+          <li><a href='${request.application_url}/'>Fubb</a></li>
+          <li><a href='${request.application_url}/about'>About</a></li>
+          <li><a href='${request.application_url}/license'>License</a></li>
+          <li><a href='${request.application_url}/terms'>Terms</a></li>
+          <li><a href='${request.application_url}/help'>Help</a></li>
+        </ul>
+        <ul>
+          <li><a href='${request.application_url}/trailers'>Watch Trailers</a></li>
+          <li><a href='${request.application_url}/trailers/random'>Random Trailer</a></li>
+        </ul>
+        <ul tal:condition='python: logged_in'>
+          <li>
+            <a href='${request.application_url}/accounts/${current_user.id}/movies'>
+              My Collection
+            </a>
+          </li>
+          <li>
+            <a href='${request.application_url}/accounts/${current_user.id}/movies/add'>
+              Add Movie
+            </a>
+          </li>
+          <li>
+            <a href='${request.application_url}/accounts/${current_user.id}/movies/random'>
+              Random Movie
+            </a>
+          </li>
+          <li>
+            <a href='${request.application_url}/accounts/${current_user.id}/movies/stats'>
+              Stats
+            </a>
+          </li>
+        </ul>
+        <ul tal:condition='python: logged_in'>
+          <li>
+            <a href='${request.application_url}/accounts/${current_user.id}'>
+              My Profile
+            </a>
+          </li>
+          <li>
+            <a href='${request.application_url}/accounts'>
+              Find a Profile
+            </a>
+          </li>
+          <li>
+            <a href='${request.application_url}/movies/${current_user.id}/settings'>
+              Settings
+            </a>
+          </li>
+          <li>
+            <a href='${request.application_url}/logout'>
+              Logout
+            </a>
+          </li>
+        </ul>
+        <img src='/static/images/wallpapers/watermark.png' style='float:right;margin-right:5%;' />
+        <br />
+        <span class='small_font'>&copy 2015 Daniel Altenburg | Licensed under the GNU GPL 3.0</span>
+        <div
+          class="fb-like"
+          data-share="true"
+          data-width="450"
+          data-show-faces="true">
+        </div>
+      </div>
+      <!-- FOOTER END -->
+    </div>
+
+    <div id='back_to_top'>
+      <a href='#' title='Click here to return to the top of the page'>
+        <img src='/static/images/icons/up_arrow.png' style='width:30px;' />
+      </a>
+    </div>
+    
+    <!-- OVERLAYS START -->
+    <div id='loading_screen'></div>
+    <div id='backlight_overlay'></div>
+    <!-- OVERLAYS END -->
+  </body>
+
+</html>

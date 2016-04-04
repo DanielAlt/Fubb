@@ -1,0 +1,29 @@
+<metal:macro use-macro="master">
+
+	<metal:slot fill-slot="title">
+
+	    <title>Fubb | Terms and Conditions</title>
+	
+	</metal:slot>
+
+	<metal:slot fill-slot="fb-meta">
+		<meta property="og:title" content="Fubb | Terms and Conditions"/>
+		<meta property="og:url" content="${request.url}"/>
+	</metal:slot>
+
+	<metal:slot fill-slot='css'>
+		<link rel='stylesheet' type=''
+	</metal:slot>
+
+	<metal:slot fill-slot='script'>
+		
+	</metal:slot>
+
+	<metal:slot fill-slot='description'>
+		
+	</metal:slot>
+
+	<metal:slot fill-slot='content'>
+	</metal:slot>
+
+</metal:macro>

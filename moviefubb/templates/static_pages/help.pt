@@ -1,0 +1,161 @@
+<metal:macro use-macro="master">
+
+	<metal:slot fill-slot="title">
+	    <title>Fubb | Help with your Account</title>
+	</metal:slot>
+
+	<metal:slot fill-slot="fb-meta">
+		<meta property="og:image" content=""/>
+		<meta property="og:title" content="Fubb | Help with your Account"/>
+		<meta property="og:url" content="${request.url}"/>
+	</metal:slot>
+
+	<metal:slot fill-slot='css'>
+		<link rel='stylesheet' type='text/css' media='screen' href='/static/stylesheets/text_pages.css' />
+		<link rel='stylesheet' type='text/css' media='screen' href='/static/stylesheets/help.css' />
+	</metal:slot>
+
+	<metal:slot fill-slot='script'>
+		<script type='text/javascript' src='/static/javascripts/help.js'></script> 
+	</metal:slot>
+
+	<metal:slot fill-slot='description'>
+		
+	</metal:slot>
+
+	<metal:slot fill-slot='content'>
+		
+		<div class='scroll_page'>
+			<br />
+			<!-- TITLE -->
+			<div class='title_wrapper'>
+				<span class='title_font'>The Help Desk</span>
+			</div>
+			<!-- TITLE -->
+
+			<!-- HELP TABBAR -->
+			<div id='help_tabbar'>
+				<span class='help_tabbar_btn' data-tab='accounts' title='Click here to get Information on your Fubb Account'>
+					<img src='/static/images/icons/profile_icon.png' class='subtab_icon' />
+					<span class='dissapear_when_small'>
+						Accounts
+					</span>
+				</span>
+				<span class='help_tabbar_btn' data-tab='movies' title='Click here to get information on your Movie collection'>
+					<img src='/static/images/icons/movielist_icon.png' class='subtab_icon' />
+					<span class='dissapear_when_small'>
+						Movies
+					</span>
+				</span>
+				<span class='help_tabbar_btn' data-tab='trailers' title='Click here to get information on Movie Trailers.'>
+					<img src='/static/images/icons/trailer_icon.png' class='subtab_icon' />
+					<span class='dissapear_when_small'>
+						Trailers
+					</span>
+				</span>
+			</div>
+			<!-- HELP TABBAR -->
+			<br /><br />
+
+			<!-- HELP WITH ACCOUNTS-->
+			<div id='tabpage_accounts' class='text_col tabpage tabpage_active'>
+				<p class='basic_font'>
+					So you need help with your Fubb Account?
+				</p>
+				<ul>
+					<li>
+						<a href='#create_your_account'>Creating an Account</a>
+					</li>
+					<li>
+						<a href='#confirm_your_email'>Confirming your Email</a>
+					</li>
+					<li>
+						<a href='#your_profile'>Your User Profile</a>
+					</li>
+					<li>
+						<a href='#update_your_info'>Updating your Core Info</a>
+					</li>
+					<li>
+						<a href='#update_your_favs'>Updating your Profile Favorites</a>
+					</li>
+					<li>
+						<a href='#delete_account'>Deleting your Account</a>
+					</li>
+				</ul>
+				<br />
+				<span id='create_your_account' class='sub_title_font'>Creating An Account</span>
+				<p class='basic_font'>
+					To create a Fubb Account, go to the Signup Page by clicking <a href='${request.application_url}/signup'>here</a>, or hovering over the lock icon in the left tool bar, and selected signup from the menu.
+					<br /><br /> 
+					Fill out the signup form, by providing a Valid Email, and Password. To become a Fubb member, you must agree to Fubb's <a href='${request.application_url}/terms'>Terms and Conditions</a>. 
+				</p>
+				<img src='/static/images/help_shots/signup.png' class='textcol_img' />
+				<br /><br />
+				<span id='confirm_your_email' class='sub_title_font'>Confirming your Email</span>
+				<p class='basic_font'>
+					When you submit your information, an email will be sent to the email address you provided, asking you to confirm your acount. Follow the link provided in the email to confirm your account. We do this in order to verify that there is no mistake in your email, so that in the event of losing your password, we can validate your identity in a similar way. 
+					<br /><br />
+					The confirmation email can be resent, by navigating to your profile, and clicking the Exclamation Mark icon, located to the right of your Username. 
+				</p>
+				<img src='/static/images/help_shots/confirming.png' class='textcol_img'/>
+				<br /><br />
+				<span id='your_profile' class='sub_title_font'>Your Profile</span>
+				<p class='basic_font'>
+					After you first create your account, You'll be redirected to your Profile Page. From here you can manage all aspects of your account. Your profile page also allows other users to interact with you. You can use it to display your top picks, and recent additions. 
+				</p>
+				<img src='/static/images/help_shots/profile_full.png' class='textcol_img' />
+				<p class='basic_font'>
+					**If you notice an exclamation mark Icon next to your username at the top of the page, you have not yet confirmed your account's email. see <a href='#confirm_your_email'>Confirming your Email</a> for details on confirming your Email.
+				</p>
+				<br /><br />
+				<span id='update_your_info' class='sub_title_font'>
+					Updating your Basic Information
+				</span>
+				<p class='basic_font'>
+					To update your basic information (email, password, or username) you can hover over the profile icon in the left toolbar, and select, "settings," (the Gear) from the hover menu. This will take you to the settings page where you can update your information.
+					<br /><br />
+					If you're updating the email on file, an email will be sent to the new address, asking you to confirm your account. For help with confirming your account click <a href='#confirm_your_account'>here</a>.
+				</p>
+				<img src='/static/images/help_shots/settings.png' class='textcol_img' />
+				<br /><br />
+				<span id='update_your_favs' class='sub_title_font'>
+					Updating your Profile Favorites
+				</span>
+				<p class='basic_font'>
+					When you first create your account you might notice a message on your profile page telling you, 'your profile is looking a little bare'. To update you profile Favorite Lists, hover over the user icon in the left toolbar, and select 'Edit Profile,' from the Hover menu. 
+				</p>
+				<img src='/static/images/help_shots/profile_edit.png' class='textcol_img' />
+				<br /><br />
+				<span class='sub_title_font'>Deleting your Account</span>
+				<br />
+				<p class='basic_font'>
+					To delete your account, navigate to the Core settings page (left toolbar > profile > settings), and hit the big red button to delete your account. 
+					<br /><br />
+					Please be advised, this is not facebook, once you hit delete - your account, and all associated information, will be deleted permanently.
+				</p>
+				<a href='#' style='text-align: center;' class='basic_font'>
+					Back to Top
+				</a>
+			</div>
+			<!-- HELP WITH ACCOUNTS -->
+
+			<!-- HELP WITH MOVIES -->
+			<div id='tabpage_movies' class='text_col tabpage tabpage_hidden'>
+				<p class='basic_font'>
+					Movies Help Page Coming Soon
+				</p>
+			</div>
+			<!-- HELP WITH MOVIES -->
+
+			<!-- HELP WITH TRAILER -->
+			<div id='tabpage_trailers' class='text_col tabpage tabpage_hidden'>
+				<p class='basic_font'>
+					Trailers Help Page Coming Soon
+				</p>
+			</div>
+			<!-- HELP WITH TRAILERS -->
+
+		</div>
+	</metal:slot>
+
+</metal:macro>

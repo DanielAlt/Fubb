@@ -1,0 +1,29 @@
+<metal:macro use-macro="master">
+
+	<metal:slot fill-slot="title">
+
+	    <title>Fubb | Privacy Statement</title>
+	
+	</metal:slot>
+
+	<metal:slot fill-slot="fb-meta">
+		<meta property="og:title" content="Fubb | Privacy Statement"/>
+		<meta property="og:url" content="${request.url}"/>
+	</metal:slot>
+
+	<metal:slot fill-slot='css'>
+	</metal:slot>
+
+	<metal:slot fill-slot='script'>
+		
+	</metal:slot>
+
+	<metal:slot fill-slot='description'>
+		
+	</metal:slot>
+
+	<metal:slot fill-slot='content'>
+		<span class='title_font'>Privacy Statement</span>
+	</metal:slot>
+
+</metal:macro>

@@ -1,0 +1,107 @@
+<metal:macro use-macro="master">
+
+	<metal:slot fill-slot="title">
+	    <title>Fubb</title>
+	</metal:slot>
+
+	<metal:slot fill-slot="fb-meta">
+		<meta property="og:image" content="${request.application_url}/static/images/wallpapers/fubb_logo.png"/>
+		<meta property='og:description' content='Show off your movies, analyze your interests, and explore thousands of movie trailers.' />
+		<meta property="og:title" content="Check Out Fubb!"/>
+		<meta property="og:url" content="${request.application_url}"/>
+	</metal:slot>
+
+	<metal:slot fill-slot='css'>
+		<link rel='stylesheet' type='text/css' media='screen' href='/static/stylesheets/home.css' />
+		<link rel='stylesheet' type='text/css' media='screen' href='/static/stylesheets/forms.css' />
+	</metal:slot>
+
+	<metal:slot fill-slot='script'>
+		<script type='text/javascript' src='/static/javascripts/home.js'></script>
+	</metal:slot>
+
+	<metal:slot fill-slot='description'>
+		Fubb helps you keep track of your movie collection in an entertaining way. Show your friends your impressive collection.	
+	</metal:slot>
+
+	<metal:slot fill-slot='content'>
+		<div class='scroll_page'>
+
+			<br />
+			<!-- TITLE IF LOGGED IN-->
+			<div tal:condition='python: logged_in' class='title_wrapper'>
+				<span class='title_font'>Welcome Back, ${current_user.username}</span>
+			</div>
+			<!-- TITLE IF LOGGED IN-->
+			
+			<!-- TITLE IF NOT LOGGED IN-->
+			<div tal:condition='python: not logged_in' class='title_wrapper'>
+				<span class='title_font' >Fubb</span>
+			</div>
+			<!-- TITLE IF NOT LOGGED IN-->
+
+			<br />
+			<!-- LOGIN FORM -->
+			<div tal:condition='python: not logged_in' class='side_box'>
+				<span class='sub_title_font'>Log In</span>
+				<br />
+				<table class='signin_form'>
+					<thead>
+						<tr>
+							<td><label>Email</label></td>
+							<td><label>Password</label></td>
+							<td></td>
+						</tr>
+					</thead>
+					<tbody>
+						<form action='/login' method='post'>
+							<tr>
+								<td><input type='text' placeholder='Type your Email' name='email' /></td>
+								<td><input type='password' name='password' /></td>
+								<td><input type='submit' name='form.submitted' value='Log In'/></td>
+							</tr>
+						</form>
+						<tr>
+							<td></td>
+							<td><a href='/forgot'>Forgot Password?</a></td>
+						</tr>
+
+					</tbody>
+				</table>
+				<br />
+				<span class='small_font'>
+					Not already a member? Click <a href='/signup'> here</a> to Sign Up.
+				</span>
+			</div>
+			<!-- LOGIN FORM -->
+
+			<!-- Random Trailer -->
+			<div class='side_box'>
+				<span class='sub_title_font'>Random trailer</span>
+				<br /><br />
+				<div id='movie_player'>
+					<iframe width="420" height="315" src="https://www.youtube.com/embed/${random_trailer}" frameborder="0" allowfullscreen></iframe>
+				</div>
+			</div>
+			<!-- Random Trailer -->
+						
+			<!-- RECENTLY ADDED (IF LOGGED IN) -->
+			<div tal:condition='python: logged_in' class='side_box'>
+				<span class='sub_title_font'>Recently Added</span>
+				<br /><br />
+				<div id='recent_box'>
+					<div>
+						<div tal:repeat='movie recent_movies'>
+							<a href='/accounts/${movie.user_id}/movies/${movie.id}'>
+								<img src='${movie.poster}' class='poster_img' />
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- RECENTLY ADDED (IF LOGGED IN) -->
+			<br /><br />
+		</div>
+	</metal:slot>
+
+</metal:macro>

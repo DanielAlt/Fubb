@@ -1,0 +1,124 @@
+<metal:macro use-macro="master">
+
+	<metal:slot fill-slot="title">
+	    <title>Fubb | Add a Movie</title>
+	</metal:slot>
+
+	<metal:slot fill-slot="fb-meta">
+		<meta property="og:image" content=""/>
+		<meta property="og:title" content="Add a Movie | Movie Fubb"/>
+		<meta property="og:url" content="${request.application_url}/accounts/${user.id}/movies/add"/>
+	</metal:slot>
+
+	<metal:slot fill-slot='css'>
+		<link rel='stylesheet' type='text/css' media='screen' href='/static/stylesheets/forms.css' />
+		<link rel='stylesheet' type='text/css' media='screen' href='/static/stylesheets/home.css' />
+	</metal:slot>
+
+	<metal:slot fill-slot='script'>
+		<script type='text/javascript' src='/static/javascripts/validate_movieadd.js'></script>
+	</metal:slot>
+
+	<metal:slot fill-slot='description'>
+		
+	</metal:slot>
+
+	<metal:slot fill-slot='content'>
+
+		<div class='scroll_page'>
+
+			<br /><br />
+
+			<div class='title_wrapper'>
+				<span class='title_font'>
+					Add Movie
+					
+					<a href='${request.application_url}/accounts/${user.id}/movies' title="Click here to return to ${user.username}'s Collection">
+						<img class='subtab_icon' src='/static/images/icons/arrow_left_icon.png' />
+					</a>
+				</span>
+			</div>
+
+			<br /><br />
+			
+			<div class='side_box'>
+				<table>
+					<form action="/accounts/${current_user.id}/movies/add" method="post">
+						<tbody>
+							<tr>
+								<td class='label_slot'><label>Title</label></td>
+								<td>
+									<input type='text' class='text_input' name='title' placeholder='Ex. Nightmare on Elmstreet' />
+								</td>
+							</tr>
+							<tr>
+								<td class='label_slot'><label>Genres</label></td>
+								<td>
+									<input type='text' name='genre_tags'  class='text_input' placeholder='#Horror' />
+								</td>
+							</tr>
+							<tr>
+								<td class='label_slot'><label>Format</label></td>
+								<td>
+									<select name='location' class='dropdown_input'>
+										<option value='any'>Any</option>
+										<option value='dvd'>DVD</option>
+										<option value='blueray'>Bluray</option>
+										<option value='vhs'>VHS</option>
+										<option value='hd'>External HD</option>
+										<option value='computer'>Computer</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td class='label_slot'><label>Watched Status</label></td>
+								<td>
+									<select name='status_w' class='dropdown_input'>
+										<option value='watched'>Watched</option>
+										<option value='unwatched'>Not Watched</option>
+									</select>
+								</td>
+							</tr>
+
+							<tr>
+								<td class='label_slot'><label>Download Status</label></td>
+								<td>
+									<select name='status_dl' class='dropdown_input'>
+										<option value='NA'>N/A</option>
+										<option value='pending'>Pending</option>
+										<option value='downloading'>Downloading</option>
+										<option value='downloaded'>Downloaded</option>
+										<option value='deleted'>Deleted</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td></td>
+								<td>
+									<input id='submitButton' type='submit' class='submit_btn' name='form.submitted' value='Submit' />
+								</td>
+							</tr>
+						</tbody>
+					</form>
+				</table>	
+			</div>
+
+			<div class='side_box'>
+				<div class='sidebox_title'>
+					Rules for Movies
+				</div>
+				<ul id='rules_list'>
+					<br />
+					<li id='title_rule'>
+						The Title Must be greater than 0 Characters, and less than 100 Characters, in length. 
+					</li>
+					<li id='genre_rule'>
+						Genres Must be separated by the # sign, and must only contain letters. 
+					</li>
+				</ul>
+			</div>
+			<br /><br />
+		</div>
+	</metal:slot>
+
+</metal:macro>

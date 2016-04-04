@@ -1,0 +1,57 @@
+<metal:macro use-macro="master">
+
+	<metal:slot fill-slot="title">
+	    <title>Fubb | Confirm your Account</title>
+	</metal:slot>
+
+	<metal:slot fill-slot="fb-meta">
+		<meta property="og:image" content="link/to/image"/>
+		<meta property="og:title" content="Fubb | Confirm your Account"/>
+		<meta property="og:url" content="url/path/to/this/page"/>
+		<meta property="og:type" content="blog"/>
+	</metal:slot>
+
+	<metal:slot fill-slot='css'>
+	</metal:slot>
+
+	<metal:slot fill-slot='script'>
+		
+	</metal:slot>
+
+	<metal:slot fill-slot='description'>
+		
+	</metal:slot>
+
+	<metal:slot fill-slot='content'>
+		<br /><br />
+
+		<div tal:condition='python: (confirmed) and (user.id==current_user.id)' class='side_box'>
+			<span class='title_font'>
+				Success, Thank you for confirming your Account.
+			</span>
+			<p class='basic_font'>
+				Now that your account is confirmed, you can recover your password or username via email.  
+			</p>
+		</div>
+
+		<div tal:condition='python: (confirmed==False) and (user.id==current_user.id)' class='side_box'>
+			<span class='title_font'>
+				Failure, The account is not confirmed.
+			</span>
+			<p class='basic_font'>
+				Something went wrong while confirming your account. Please Try Following the link in your email again, or try resending the message by clicking <a href='${request.application_url}/accounts/${user.id}/confirm/resend'>here.</a>
+			</p>
+		</div>
+		<div tal:condition='python: not (user.id == current_user.id)' class='side_box'>
+			<span class='title_font'>Failed To Confirm Account</span>
+			<p class='basic_font'>
+				Sorry, You cannot confirm this account. It does not appear to belong to you. 
+				<br /><br />
+
+				If you are using multiple accounts: Please <a href='${request.application_url}/logout'>Log Out</a>, and sign into the account that corresponds to the email where you found this confirmation link.
+				<br /><br />
+			</p>
+		</div>	
+	</metal:slot>
+
+</metal:macro>

@@ -1,0 +1,80 @@
+---------------------------------------------------------------------------
+
+					THINGS 'TO DO' BEFORE COMPLETION
+
+---------------------------------------------------------------------------
+FOR DEPLOYMENT:
+
+- BUY HOSTING
+- BUY DOMAIN NAME
+
+---------------------------------------------------------------------------
+FOR SECURITY
+
+- BUY SSL CERTIFICATE
+
+---------------------------------------------------------------------------
+FOR SEO (search engine optimization)
+
+- Have Server Return Sitemap.xml, Robots.txt (For Google Optimization)
+- Update Facebook Meta Tags on ALL PAGES
+- Update Description Tags on All Pages
+- Register Site with Google
+
+---------------------------------------------------------------------------
+FOR USABILITY
+
+- Make Sure all Image Links have an appropriate Title attribute
+- Assure Every Form has JS and Controller Validation
+
+---------------------------------------------------------------------------
+FOR PROFIT
+
+- Investigate Advertising Opportunities
+- Add Donate Button to Page Footer
+- Create GOFUNDME (Video, Images, Samples)
+
+---------------------------------------------------------------------------
+FOR FUNCTIONALITY
+
+- Build Pagination for Account Page
+
+- Build Pagination for Movie Collection (AJAX SCROLL LOADING)
+- Build Account Search Function
+- Build Movies Search Function
+- Build Account Delete Function
+- Build Movie Delete Function
+
+---------------------------------------------------------------------------
+DESIGN
+
+> GLOBAL:
+	- Test and Redesign Every Page for Use on Mobile Design
+	- Restyle Submit Button for Forms. 
+
+> HOME PAGE: 
+	- Remove FUBB LOGO from Homepage
+	
+> MOVIE INDEX PAGE:
+	- Create Details View
+	- Style Search Form
+	- Replace View Switching Buttons with something that look good.
+	- Add Hover Events For Movies in Window View
+
+> MOVIE SHOW PAGE:
+	- 
+
+> COLLECTION STATS PAGE:
+	- Fix Layout, Fonts, Tables
+	- Make Functions for Canvas Graphs
+
+> PROFILE EDIT PAGE:
+	- Fix Layout
+	- Update Rules for Form Validation
+
+> ACCOUNT EDIT PAGE:
+---------------------------------------------------------------------------
+DONE
+
+- FIX PASSWORD HASHING | DONE
+- Investigate Cookie/Cookie Encryption | DONE

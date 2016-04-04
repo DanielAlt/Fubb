@@ -1,0 +1,177 @@
+<metal:macro use-macro="master">
+
+	<metal:slot fill-slot="title">
+	    <title>Fubb | Find a Profile</title>
+	</metal:slot>
+
+	<metal:slot fill-slot="fb-meta">
+		<meta property="og:image" content=""/>
+		<meta property="og:title" content="Find a User Profile"/>
+		<meta property="og:url" content="${request.url}"/>
+	</metal:slot>
+
+	<metal:slot fill-slot='css'>
+		<link rel='stylesheet' type='text/css' media='screen' href='/static/stylesheets/forms.css' />
+		<link rel='stylesheet' type='text/css' media='screen' href='/static/stylesheets/accounts.css' />
+		<link rel='stylesheet' type='text/css' media='screen' href='/static/stylesheets/index.css' />
+	</metal:slot>
+
+	<metal:slot fill-slot='script'>
+		<script type='text/javascript' src='/static/javascripts/index.js'></script>
+		<script type='text/javascript' src='/static/javascripts/search_form.js'></script>
+		<Script type='text/javascript' src='/static/javascripts/forms.js'></Script>
+	</metal:slot>
+
+	<metal:slot fill-slot='description'>
+		
+	</metal:slot>
+
+	<metal:slot fill-slot='content'>
+		
+		<div id='static_top'>
+			<span class='title_font'>
+				Find a Profile
+			</span>
+		</div>
+		<div class='scroll_page'>
+
+			<br /><br />
+			<br /><br />
+
+			<!-- SEARCH FORM -->
+			<form method='get' class='search_form' action='${request.application_url}/accounts'>
+				<input type='text' name='query' value='${page_args["query"]}' placeholder='Type a search query' />
+				<input type='submit' value='Search' />
+				<br />
+				<small id='uncollapse_advanced'>Advanced search options</small>
+				<div id='advanced_search'>
+					<table>
+						<tbody>
+							<tr>
+								<td><label class='small_label'>Results/Page</label></td>
+							</tr>
+							<tr>
+								<td>
+									<input name='results' value='${page_args["results"]}' type='number' min='1' max='250' step='1' />
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<br />
+				</div>
+			</form>
+			<!-- SEARCH FORM -->
+			
+			<br />
+
+			<!-- PAGINATION -->
+			<div tal:condition="python: (pagination['number_of_pages'] > 0)" class='pagination_controls'>
+				<ul>
+					<li tal:condition='python: (pagination["prev_page"] >= 0)'>
+						<a href='${request.application_url}/accounts?&query=${page_args["query"]}&orderby=${page_args["orderby"]}&view=${page_args["view"]}&page=${pagination["prev_page"]}&results=${pagination["results"]}'>
+							<- Previous
+						</a>
+					</li>
+					<li tal:repeat='x pagination["page_list"]'>
+						<div tal:condition='python: (x == pagination["current_page"])'>
+							<a class='paginator-current_page' href='${request.application_url}/accounts?&query=${page_args["query"]}&view=${page_args["view"]}&orderby=${page_args["orderby"]}&page=${x}&results=${pagination["results"]}'>
+								${x}
+							</a>
+						</div>
+						<div tal:condition='python: not (x == pagination["current_page"])' >
+							<a class='paginator-inactive_page' href='${request.application_url}/accounts?&query=${page_args["query"]}&orderby=${page_args["orderby"]}&view=${page_args["view"]}&page=${x}&results=${pagination["results"]}'>
+								${x}
+							</a>
+						</div>
+					</li>
+					<li tal:condition='python: (pagination["next_page"] <= pagination["number_of_pages"]-1)' >
+						<a href='${request.application_url}/accounts?&query=${page_args["query"]}&orderby=${page_args["orderby"]}&view=${page_args["view"]}&page=${pagination["next_page"]}&results=${pagination["results"]}'>
+							Next ->
+						</a>
+					</li>
+				</ul>
+			</div>
+			<!-- PAGINATION -->
+
+			<br />
+			
+			<!-- TEXT FOR SEARCH RESULTS -->			
+			<div tal:condition='python: (page_args["query"] is not None)' style='margin-left:2.5%;'>
+				<div tal:condition='python: (len(users) == 0)'>
+					<br />
+					<span class='sub_title_font'>
+						No results found for, "${page_args['query']}".
+					</span>
+					<p class='basic_font'>
+						Click <a href='${request.application_url}/accounts'>here</a> to return to the Account List.
+					</p>
+				</div>
+
+				<span class='sub_title_font' tal:condition='python: (len(users) > 0)'>
+					<br />
+					${len(users)} results found for, "${page_args['query']}"
+				</span>
+			</div>
+			<!-- TEXT FOR SEARCH RESULTS -->	
+			
+			<div id='user_table'>
+
+				<div tal:repeat='user users' class='ubox_wrapper'>
+					<div tal:condition='python: ((user.privacy is not None) and not (user.privacy.show_profile=="onlyme"))' class='ubox'>
+						<p class='basic_font'>
+							<span>
+								<a href='/accounts/${user.id}'>
+									<img src='/static/images/icons/profile_icon.png' class='subtab_icon' />
+								</a>
+								<a tal:condition='python: not (user.privacy.show_collection=="onlyme")' href='/accounts/${user.id}/movies'>
+									<img src='/static/images/icons/movielist_icon.png' class='subtab_icon' />
+								</a>
+								<a tal:condition='python: not (user.privacy.show_stats=="onlyme")' href='/accounts/${user.id}/movies/stats'>
+									<img src='/static/images/icons/stats_icon.png' class='subtab_icon' />
+								</a>
+							</span>
+						</p>
+						<br />
+						<a href='/accounts/${user.id}'>
+							<span class='sub_title_font'>${user.username}</span>
+						</a>
+					</div>
+				</div>
+			</div>
+
+			<br />
+
+			<!-- PAGINATION -->
+			<div tal:condition="python: (pagination['number_of_pages'] > 0)" class='pagination_controls'>
+				<ul>
+					<li tal:condition='python: (pagination["prev_page"] >= 0)'>
+						<a href='${request.application_url}/accounts?&query=${page_args["query"]}&orderby=${page_args["orderby"]}&view=${page_args["view"]}&page=${pagination["prev_page"]}&results=${pagination["results"]}'>
+							<- Previous
+						</a>
+					</li>
+					<li tal:repeat='x pagination["page_list"]'>
+						<div tal:condition='python: (x == pagination["current_page"])'>
+							<a class='paginator-current_page' href='${request.application_url}/accounts?&query=${page_args["query"]}&view=${page_args["view"]}&orderby=${page_args["orderby"]}&page=${x}&results=${pagination["results"]}'>
+								${x}
+							</a>
+						</div>
+						<div tal:condition='python: not (x == pagination["current_page"])' >
+							<a class='paginator-inactive_page' href='${request.application_url}/accounts?&query=${page_args["query"]}&orderby=${page_args["orderby"]}&view=${page_args["view"]}&page=${x}&results=${pagination["results"]}'>
+								${x}
+							</a>
+						</div>
+					</li>
+					<li tal:condition='python: (pagination["next_page"] <= pagination["number_of_pages"]-1)' >
+						<a href='${request.application_url}/accounts?&query=${page_args["query"]}&orderby=${page_args["orderby"]}&view=${page_args["view"]}&page=${pagination["next_page"]}&results=${pagination["results"]}'>
+							Next ->
+						</a>
+					</li>
+				</ul>
+			</div>
+			<!-- PAGINATION -->
+			
+			<br /><br />
+		</div>
+	</metal:slot>
+
+</metal:macro>

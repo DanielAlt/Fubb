@@ -1,0 +1,46 @@
+<metal:macro use-macro="master">
+
+	<metal:slot fill-slot="title">
+
+	    <title>Fubb | Page Not Found</title>
+	
+	</metal:slot>
+
+	<metal:slot fill-slot="fb-meta">
+		<meta property="og:title" content="Fubb | Page Not Found"/>
+		<meta property="og:url" content="${request.url}"/>
+	</metal:slot>
+
+	<metal:slot fill-slot='css'>
+		<link rel='stylesheet' type='text/css' media='screen' href='/static/stylesheets/text_pages.css' />
+	</metal:slot>
+
+	<metal:slot fill-slot='script'>
+		
+	</metal:slot>
+
+	<metal:slot fill-slot='description'>
+		
+	</metal:slot>
+
+	<metal:slot fill-slot='content'>
+		<div class='scroll_page'>
+			<br />
+			<div class='title_wrapper'>
+				<span class='title_font'>404, Page not Found</span>
+			</div>
+			<br />		
+			<div class='text_col'>
+				<img src='/static/images/wallpapers/404.jpg' style='width:60%;margin-left:20%;'/>
+				<br />
+				<p class='basic_font'>
+					${message} <br /><br />
+					"Yah... well... see... I don't have them in front of me. Why don't I just fax you over a copy? "
+				</p>
+			</div>
+			<br /><br />
+		</div>
+
+	</metal:slot>
+
+</metal:macro>

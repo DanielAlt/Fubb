@@ -1,0 +1,42 @@
+#help_tabbar{
+	text-align: center;
+	width:85%;
+	padding:15px;
+	margin-left:5%;
+	background-color: rgba(0,0,0,.8);
+}
+
+@media screen and (max-width: 1023px){
+	.dissapear_when_small{
+		display: none !important;
+	}
+}
+@media screen and (min-width: 1024px){
+	.dissapear_when_small{
+		display: inline-block !important;
+	}
+}
+
+#help_tabbar > span{
+	display:inline-block;
+	background-color: black;
+	padding:15px;
+	cursor:pointer;
+}
+#help_tabbar > span:hover{
+	background-color: rgb(50,50,50);
+}
+#help_tabbar > span:nth-child(n){
+	display:inline-block;
+	vertical-align: center;
+	color:white;
+	font-size:14pt;
+	font-family: bd_cartoon;
+}
+
+.tabpage_active{
+	display: inline-block;
+}
+.tabpage_hidden{
+	display: none;
+}

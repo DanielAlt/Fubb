@@ -1,0 +1,81 @@
+#stats_tabbar{
+	text-align: center;
+	width:90%;
+	padding:15px;
+	margin-left:2.5%;
+	background-color: rgba(0,0,0,.8);
+}
+
+@media screen and (max-width: 1023px){
+	.dissapear_when_small{
+		display: none !important;
+	}
+}
+@media screen and (min-width: 1024px){
+	.dissapear_when_small{
+		display: inline-block !important;
+	}
+}
+
+#stats_tabbar > span{
+	display:inline-block;
+	background-color: black;
+	padding:15px;
+	cursor:pointer;
+}
+#stats_tabbar > span:hover{
+	background-color: rgb(50,50,50);
+}
+#stats_tabbar > span:nth-child(n){
+	display:inline-block;
+	vertical-align: center;
+	color:white;
+	font-size:14pt;
+	font-family: bd_cartoon;
+}
+
+.tabpage_active{
+	display: inline-block;
+}
+.tabpage_hidden{
+	display: none;
+}
+.tabpage{
+	width:100%;
+}
+
+.screen{
+	width:100%;
+	height:100%;
+	border:solid 1.5px black;
+}
+
+.chart{
+	border-collapse:collapse;
+	max-height:325px;
+	min-width:100%;
+	overflow-y:scroll;
+}
+.chart > thead > tr{
+	background-color:black;
+	min-width:100%;
+}
+.chart > thead > tr > td{
+	padding:10px;
+	color:white;
+	font-size: 14pt;
+	font-family: bd_cartoon;
+}
+
+.chart > tbody > tr{
+	color:black;
+	min-width: 100%;
+	background-color: rgba(255,255,255,.4);
+}
+.chart > tbody > tr > td{
+	padding:10px;
+	border-bottom:solid 1.5px black;
+}
+.subtab_icon{
+	cursor:pointer;
+}

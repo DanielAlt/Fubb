@@ -1,0 +1,74 @@
+<metal:macro use-macro="master">
+
+	<metal:slot fill-slot="title">
+	    <title>Fubb | About</title>
+	</metal:slot>
+
+	<metal:slot fill-slot="fb-meta">
+		<meta property="og:image" content=""/>
+		<meta property="og:title" content="About Movie Fubb"/>
+		<meta property="og:url" content="${request.url}"/>
+	</metal:slot>
+
+	<metal:slot fill-slot='css'>
+		<link rel='stylesheet' type='text/css' media='screen' href='/static/stylesheets/text_pages.css'/>
+	</metal:slot>
+
+	<metal:slot fill-slot='script'>
+		
+	</metal:slot>
+
+	<metal:slot fill-slot='description'>
+		
+	</metal:slot>
+
+	<metal:slot fill-slot='content'>
+		<div class='scroll_page'>
+			<br /><br />
+			<div class='title_wrapper'>
+				<span class='title_font'>About Fubb</span>				
+			</div>
+			<br />
+			<div class='text_col'>
+				<p class='basic_font'>
+					<span class='sub_title_font'>What's Fubb?</span>
+					<br /><br />
+					Fubb is the best way to keep track of your Movie Collection. 
+					<br /><br />
+					- Show off your movie collection<br />
+					- See what other people are watching. <br />
+					- Rate and review the films that you Love! <br />
+				</p>
+				<p class='basic_font'>
+					<span class='sub_title_font'>How does it Work?</span>
+					<br /><br />
+					After creating an account on Fubb, you can start adding Movies to your collection. When you add a movie, our army of Tiny Robots Ravage through various parts of the internet in search of data for that movie. 
+					<br /><br />
+					When the robots return home with the datas, your movie will have it's own page: with a movie trailer, theatrical poster, movie stats, and more! You can now relax, kick back with a beer, and surf through your consolidated collection, in any way that you see fit. 
+				</p>
+				<p class='basic_font' tal:condition='python: not logged_in'>
+					Not already a Member? Sign Up <a href='/signup'>here</a>! Membership is 100% free.
+				</p>
+				<p class='basic_font'>
+					<span class='sub_title_font'>Disclaimer</span>
+					<br /><br />
+					Users of this site are subject to the Fubb's Terms and Conditions. This is not a website for sharing movie files, and this site in no way endorses piracy of any kind. Home taping is still killing music. 
+				</p>
+				<p class='basic_font'>
+					<span class='sub_title_font'>Open Source</span>
+					<br /><br />
+					Fubb is an open source application, written by <a target='_blank' href='http://www.danielaltenburg.com/'>Daniel Altenburg</a>, and is Licensed under the GNU GPL 3.0. The Source code for Fubb can be found on <a href='https://www.github.com/DanielAlt/Fubb'>Github</a>.
+				</p>
+				<p class='basic_font'>
+					<span class='sub_title_font'>Special Thanks</span>
+					<br /><br />				
+					Without the help of the <a href='http://www.omdbapi.com/'> OMDB API </a>, this project would not have been possible within the confines of the law. 
+
+					<br /><br />
+					Special Thanks to my darling Natalie, whose movie collection and penchant for finding films was so omnivorous and radical, that I had to program for 3 months just to be able to handle it. 
+				</p>
+			</div>
+		</div>
+	</metal:slot>
+
+</metal:macro>

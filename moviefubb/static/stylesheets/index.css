@@ -1,0 +1,155 @@
+/* Collection Index Page */
+.scroll_page{
+	display:inline-block;
+	vertical-align:top;
+	margin-left:1%;
+	margin-top:1%;
+	width:95%;
+	height:80%;
+	background-image: -moz-linear-gradient(top, rgba(255,255,255,.4), rgba(255,255,255,.1));
+	background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0, rgba(255,255,255,.4)),color-stop(1, rgba(255,255,255,.1)));
+	background-image: -webkit-linear-gradient(top, rgba(255,255,255,.4), rgba(255,255,255,.1));
+	background-image: -moz-linear-gradient(top, rgba(255,255,255,.4), rgba(255,255,255,.1));
+	background-image: -ms-linear-gradient(top, rgba(255,255,255,.4), rgba(255,255,255,.1));
+	background-image: -o-linear-gradient(top, rgba(255,255,255,.4), rgba(255,255,255,.1));
+}
+
+@media screen and (max-width: 1023px){
+	.small_dropdown{
+		display: none;
+	}
+	.small_dropdown_btn{
+		display: inline-block;
+	}
+	.title_font{
+		font-size: 14pt;
+	}
+	.scroll_page{
+		padding-top:5%;
+	}
+}
+@media screen and (min-width: 1024px){
+	.small_dropdown{
+		position:relative;
+		display:inline-block;
+	}
+	.small_dropdown_btn{
+		display: none;
+	}
+	#small_dropdown_core{
+		float:right;
+		margin-right: 0%;
+	}
+}
+
+
+.hidden_page{
+	display:none;
+}
+.active_page{
+	display:inline-block;
+}
+
+#list_view_page{
+	width:95%;
+	margin:-left 2.5%;
+	padding:15px;
+}
+
+#list_view_page > table{
+	border-collapse: collapse;
+	background-color: black;
+	width:100%;
+}
+
+#list_view_page  > table > thead > tr > td{
+	border:0px;
+	background-color: rgb(0,0,0);
+	color:white;
+	cursor:pointer;
+	padding:15px;
+}
+
+#list_view_page > table  > tbody{
+	background-color: rgba(0,0,0,.6);
+	color:white;
+	cursor:pointer;
+	width:100%;
+}
+
+#list_view_page > table > tbody > tr:nth-child(odd){
+	background-color: rgba(100,100,100,.2);
+}
+
+#list_view_page  > table > tbody > tr > td, #list_view_page  > thead > tr > td{
+	border-bottom:solid 1.5px white;
+	padding:7px;
+}
+
+#window_view_page{
+	width:96%;
+	background-color: black;
+	padding:2%;
+}
+
+#window_view_page > div{
+	display:inline-block;
+}
+
+#window_view_page > a > img{
+	float:left;
+	margin:10px;
+}
+
+#details_view_page > table{
+	background-color: black;
+	width:95%;
+	margin-left: 2.5%;
+	border-collapse: collapse;
+}
+
+#details_view_page > table > tbody{
+	width:100%;
+}
+
+#details_view_page > table > tbody > tr{
+	width:70%;
+	padding:5px;
+}
+
+#details_view_page > table > tbody > tr > td{
+	vertical-align: top;
+	border-bottom:solid 1.5px white;
+}
+
+#details_view_page > table > tbody > tr > td > p{
+	width:70%;
+}
+
+#static_top{
+	padding:10px;
+	position:fixed;
+	top:0%;
+	right:0%;
+	background-color: black;
+	border-bottom:solid 1.5px white;
+}
+.title_wrapper{
+	display: inline-block;
+	vertical-align: center;
+}
+.views_span{
+	position: absolute;
+	top:5%;
+	right:0%;
+}
+.title_wrapper > span > a > img{
+	margin-top:5px;
+}
+
+form{
+	background-color: black;
+	padding:15px;
+	width:90%;
+	margin-bottom: 2.5%;
+}

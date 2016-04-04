@@ -1,0 +1,171 @@
+<metal:macro use-macro="master">
+
+	<metal:slot fill-slot="title">
+	    <title>Fubb | ${user.username} </title>
+	</metal:slot>
+
+	<metal:slot fill-slot="fb-meta">
+		<meta property="og:image" content="link/to/image"/>
+		<meta property="og:title" content="Montreal Council 284"/>
+		<meta property="og:url" content="url/path/to/this/page"/>
+	</metal:slot>
+
+	<metal:slot fill-slot='css'>
+		<link rel='stylesheet' type='text/css' media='screen' href='/static/stylesheets/profile.css' />
+		<link rel='stylesheet' type='text/css' media='screen' href='/static/stylesheets/forms.css' />
+	</metal:slot>
+
+	<metal:slot fill-slot='script'>
+		<script type='text/javascript' src='/static/javascripts/profile.js'></script>
+	</metal:slot>
+
+	<metal:slot fill-slot='description'>
+		
+	</metal:slot>
+
+	<metal:slot fill-slot='content'>
+		
+		<div class='scroll_page'>
+			<br /> <br />
+
+				
+				<span class='title_font'>
+					${user.username}
+					
+					<span tal:condition='python: logged_in and ((user.privacy is not None) and not (current_user.id==user.id))'>
+						<a tal:condition='python: not (user.privacy.show_collection=="onlyme")' href='/accounts/${user.id}/movies' title="click here to view ${user.username}'s collection">
+							<img src='/static/images/icons/movielist_icon.png' class='subtab_icon' />
+						</a>
+						<a tal:condition='python: not (user.privacy.show_stats=="onlyme")' href='/accounts/${user.id}/movies/stats' title="Click here to view ${user.username}'s collection stats">
+							<img src='/static/images/icons/stats_icon.png' class='subtab_icon' />
+						</a>
+					</span>
+
+					<span tal:condition='python: logged_in and (current_user.id == user.id)'>
+						<a tal:condition='python: (user.confirmed == False)' title='Click Here to view your notifications'>
+							<img src='/static/images/icons/warning_icon.png' class='subtab_icon' id='warning_icon' />
+						</a>
+						<a href='/accounts/${current_user.id}/settings' title='click here to edit your account settings'>
+							<img src='/static/images/icons/settings_icon.png' class='subtab_icon' />
+						</a>
+						<a href='/accounts/${current_user.id}/movies/add' title='Click here to add a movie to your collection'>
+							<img src='/static/images/icons/addmovie_icon.png' class='subtab_icon' />
+						</a>
+						<a href='/accounts/${user.id}/movies' title="click here to view ${user.username}'s collection">
+							<img src='/static/images/icons/movielist_icon.png' class='subtab_icon' />
+						</a>
+						<a href='/accounts/${user.id}/movies/stats' title="Click here to view ${user.username}'s collection stats">
+							<img src='/static/images/icons/stats_icon.png' class='subtab_icon' />
+						</a>
+					</span>
+
+					<span tal:condition='python: not (logged_in) and (user.privacy is not None)'>
+						<a tal:condition='python: (not user.privacy.show_collection=="onlyme") and (not user.privacy.show_collection=="fubbusers")' href='/accounts/${user.id}/movies' title="Click here to see ${user.username}'s Collection.">
+							<img src='/static/images/icons/movielist_icon.png' class='subtab_icon' />
+						</a>
+
+						<a tal:condition='python: (not user.privacy.show_stats=="onlyme") and (not user.privacy.show_stats=="fubbusers")' href='/accounts/${user.id}/movies/stats' title="Click here to see ${user.username}'s Stats.">
+							<img src='/static/images/icons/stats_icon.png' class='subtab_icon' />
+						</a>
+					</span>
+
+
+					<span tal:condition='python: not (logged_in) and (user.privacy is None)'>
+						<a href='/accounts/${user.id}/movies' title="Click here to see ${user.username}'s Collection.">
+							<img src='/static/images/icons/movielist_icon.png' class='subtab_icon' />
+						</a>
+						
+						<a href='/accounts/${user.id}/movies/stats' title="Click here to see ${user.username}'s Stats.">
+							<img src='/static/images/icons/stats_icon.png' class='subtab_icon' />
+						</a>
+					</span>
+
+				</span>
+
+				<br /><br />
+				
+				<div class='side_box'>
+					
+					<div tal:condition='python: (user.profile is not None)'>
+						<p class='basic_font' id='about_me'>
+							About Me: <br />
+							${user.profile.about_me}
+						</p>
+						<table id='favorites_table'>
+							<tbody>
+								<tr>
+									<td>Number of Movies</td>
+									<td>
+										${collection_total}
+									</td>
+								</tr>
+								<tr>
+									<td>Favorite Film</td>
+									<td>${user.profile.fav_film}</td>
+								</tr>
+								<tr>
+									<td>Favorite Show</td>
+									<td>${user.profile.fav_show}</td>
+								</tr>
+								<tr>
+									<td>Favorite Genre</td>
+									<td>${user.profile.fav_genre}</td>
+								</tr>
+								<tr>
+									<td></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+
+					<div tal:condition='python: logged_in and ((user.profile is None) and not (user.id == current_user.id))'>
+						<p class='basic_font' id='about_me'>
+							This user has no additional Profile information to display at this time. 
+						</p>
+					</div>
+					
+					<div tal:condition='python: logged_in and ((user.profile is None) and (user.id==current_user.id))'>
+						<p class='basic_font' id='about_me'>
+							Hey ${user.username}! <br /><br />
+							Your profile is looking pretty bare right now, but you can add a more content by filling out <a href='${request.application_url}/accounts/${user.id}/settings'>this</a> form.
+						</p>
+					</div>
+				</div>
+				
+				<div class='side_box'>
+					<div id='recent_box'>
+						<div>
+							<div tal:repeat='movie recent_movies'>
+								<a href='/accounts/${movie.user_id}/movies/${movie.id}'>
+									<img src='${movie.poster}' class='poster_img' />
+								</a>
+							</div>
+						</div>
+					</div>				
+				</div>
+
+				<div tal:condition='python: logged_in and ((user.confirmed==False) and (user.id==current_user.id))' class='warning_popup'>
+					<div class='popup_title'>
+						<img src='/static/images/icons/warning_icon.png' class='subtab_icon' />
+						Your account is not yet confirmed
+					</div>
+					<p class='basic_font'>
+						An email was sent to your address, <b>${user.email}</b>, asking you to confirm your fubb account. 
+						<br /><br />
+						Please click the link in the body of the email to confirm your account.
+					</p>
+					<p class='basic_font'>
+						If you have not received the email, please make sure you have the right Email on file, by updating it 
+						<a href='${request.application_url}/accounts/${user.id}/edit'>Here</a>. 
+						<br /><br />
+						To Resend the Email, click the Button Below. 
+					</p>
+					<input type='button' class='confirm_btn' value='Send Email Again' data-user='${user.id}'/>
+					<input type='button' class='cancel_btn' value='Cancel' />
+				</div>
+
+			<br /><br />
+		</div>
+	</metal:slot>
+
+</metal:macro>

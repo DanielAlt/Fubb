@@ -1,0 +1,27 @@
+/* ON MOVIE SHOW, and MOVIE INDEX */
+.warning_popup{
+	width:45%;
+	height:auto;
+	padding:15px;
+	top:20%;
+	left:25%;
+	position: fixed;
+	background-color:rgb(255,255,255);
+	border-radius:5px;
+	border:solid 1.5px black;
+	display:none;
+}
+#warning_icon{
+	cursor: pointer;
+}
+.warning_popup > p{
+	color:black;
+}
+.warning_popup > span{
+	background-color: black;
+	width:100%;
+	padding:3px;
+}
+.invisible{
+	display: none;
+}

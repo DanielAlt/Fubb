@@ -1,0 +1,128 @@
+.signup_form{
+	width:50%;
+	margin-left:2.5%;
+}
+.text_input{
+	width:350px;
+	height:27px;
+}
+.textarea_input{
+	width:350px;
+	height:100px;
+	resize:none;
+}
+.label_slot{
+	float:right;
+}
+.dropdown_input{
+	width:358px;
+	height:32px;
+}
+label{
+	color:white;
+	font-size:12pt;
+}
+.destructive_btn{
+	width:100%;
+	padding:10px;
+	background-color: rgb(150,15,15);
+	border-color:rgb(100,25,25);
+	font-family:bd_cartoon;
+	font-size: 13pt;
+	color:black;
+}
+.submit_btn{
+	width:100%;
+	background-color: rgb(79,128,80);
+	border-color:rgb(69,118,70);
+	font-family:bd_cartoon;
+	font-size: 13pt;
+	color:black;
+}
+.valid{
+	color: rgb(0,170,0);
+}
+.invalid{
+	color: rgb(170,0,0);
+}
+
+.side_box{
+	width:45%;
+	display: inline-block;
+	vertical-align: top;
+}
+.sidebox_title{
+	width:90%;
+	background-color: black;
+	padding:15px;
+	color:white;
+	font-family: bd_cartoon;
+	font-size: 14pt;
+}
+#rules_list{
+	width:90%;
+	margin:0%;
+	height:200px;
+	background-color: rgb(255,255,255);
+}
+
+#rules_list > li{
+	margin-top: 10px;
+}
+
+.small_label{
+	font-size: 10pt;
+}
+.search_form{
+	display: inline-block;
+	vertical-align: middle;
+	border-top-right-radius:15px;
+	margin-left: 2.5%;
+}
+.search_form > input, .search_form > select{
+	font-family:bd_cartoon;
+}
+.search_form > small{
+	color:white;
+	cursor:pointer;
+}
+#advanced_search{
+	display:none;
+}
+
+.pagination_controls{
+	width:100%;
+	text-align: center;
+	min-height:39px;
+}
+.pagination_controls > ul{
+	margin:0%;
+	padding:0%;
+	list-style-type: none;
+}
+.pagination_controls > ul > li{
+	display:inline-block;
+	padding:8px;
+	background-color: rgba(255,255,255,.6);
+	border: solid 1.5px black;
+}
+.pagination_controls > ul > li > a, .pagination_controls > ul > li > div > a{
+	color:black;
+	font-family:bd_cartoon;
+}
+
+.paginator-current_page{
+	color:red !important;
+}
+.paginator-inactive_page{}
+
+#notification_message{
+	display:none;
+	width:90%;
+	padding:15px;
+	margin-left: 2.5%;
+	background-color:rgba(0,0,170,.8);
+	color:black;
+	font-family: bd_cartoon;
+	font-size: 13pt;
+}

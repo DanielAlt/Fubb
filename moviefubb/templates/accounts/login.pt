@@ -1,0 +1,99 @@
+<metal:macro use-macro="master">
+
+	<metal:slot fill-slot="title">
+	    <title>Fubb | Login</title>
+	</metal:slot>
+
+	<metal:slot fill-slot="fb-meta">
+		<meta property="og:image" content="link/to/image"/>
+		<meta property="og:title" content="Montreal Council 284"/>
+		<meta property="og:url" content="url/path/to/this/page"/>
+		<meta property="og:type" content="blog"/>
+	</metal:slot>
+
+	<metal:slot fill-slot='css'>
+		<link rel='stylesheet' type='text/css' media='screen' href='/static/stylesheets/forms.css' />
+		<link rel='stylesheet' type='text/css' media='screen' href='/static/stylesheets/home.css' />
+		<link rel='stylesheet' type='text/css' media='screen' href='/static/stylesheets/slideshow.css' />
+	</metal:slot>
+
+	<metal:slot fill-slot='script'>
+		<script type='text/javascript' src='/static/javascripts/forms.js'></script>
+		<script type='text/javascript' src='/static/javascripts/slideshow.js'></script>
+	</metal:slot>
+
+	<metal:slot fill-slot='description'>
+		
+	</metal:slot>
+
+	<metal:slot fill-slot='content'>
+		<div class='scroll_page'>
+
+			<br />
+			<!-- LOG IN -->
+			<div class='title_wrapper'>
+				<span class='title_font'>Log In</span>
+			</div>
+			<!-- LOG IN -->
+
+			<!-- NOTIFICATION MESSAGE -->
+			<div id='notification_message'>
+				<span tal:condition="python: not (message == '')" class='sub_title_font'>
+					${message}
+				</span>
+			</div>
+			<!-- NOTIFICATION MESSAGE -->
+			<br /><br />
+
+			<!-- SIGNIN FORM -->
+			<div class='side_box'>
+				<table class='signin_form'>
+					<thead>
+						<tr>
+							<td><label>Email</label></td>
+							<td><label>Password</label></td>
+							<td></td>
+						</tr>
+					</thead>
+					<tbody>
+						<form action='/login' method='post'>
+							<tr>
+								<td><input type='text' placeholder='Type your Email' name='email' /></td>
+								<td><input type='password' name='password' /></td>
+								<td><input type='submit' name='form.submitted' value='Log In'/></td>
+							</tr>
+						</form>
+					</tbody>
+				</table>
+				<br />		
+				<span class='small_font'>Not already a Member? <a href='${request.application_url}/signup'>Sign up now!</a></span>
+			</div>
+			<div class='side_box'>
+				<div class='slideshow_box'>
+					<img src='/static/images/icons/arrow_left_icon.png' data-direction='left' class='slideshow_handle' />
+
+					<div id='slide_pane'>
+						<div class='slide current_slide' id='slide_organize' data-slide='organize' >
+							<canvas
+								id='film_organize' 
+								data-film='organize' 
+								data-message="Organize your Movie Collection"
+								class='film_strip'>
+								Fubb let's you organize your movies.
+							</canvas>						
+						</div>
+						<div class='slide hidden_slide' id='slide_showoff' data-slide='showoff' >
+							<canvas id='film_showoff' data-film='showoff' class='film_strip'>
+								Fubb let's you show off your Collection to your friends.
+							</canvas>						
+						</div>
+					</div>
+
+					<img src='/static/images/icons/arrow_right_icon.png' data-direction='right' class='slideshow_handle' />
+				</div>
+			</div>
+			<br /><br />
+		</div>
+	</metal:slot>
+
+</metal:macro>

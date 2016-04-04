@@ -1,0 +1,135 @@
+<metal:macro use-macro="master">
+
+	<metal:slot fill-slot="title">
+	    <title>Fubb | Signup</title>
+	</metal:slot>
+
+	<metal:slot fill-slot="fb-meta">
+		<meta property="og:image" content="link/to/image"/>
+		<meta property="og:title" />
+		<meta property="og:url" content="${request.application_url}" />
+		<meta property="og:type" content="blog" />
+	</metal:slot>
+
+	<metal:slot fill-slot='css'>
+		<link rel='stylesheet' type='text/css' media='screen' href='/static/stylesheets/forms.css' />
+		<link rel='stylesheet' type='text/css' media='screen' href='/static/stylesheets/home.css' />
+		<link rel='stylesheet' type='text/css' media='screen' href='/static/stylesheets/slideshow.css' />
+	</metal:slot>
+
+	<metal:slot fill-slot='script'>
+		<script type='text/javascript' src='/static/javascripts/slideshow.js'></script>
+		<script type='text/javascript' src='/static/javascripts/validate_signup.js'></script>
+		<script type='text/javascript' src='/static/javascripts/forms.js'></script>
+	</metal:slot>
+
+	<metal:slot fill-slot='description'>
+		
+	</metal:slot>
+
+	<metal:slot fill-slot='content'>
+
+		<div class='scroll_page'>
+			<br />
+
+			<!-- TITLE (IF NOT LOGGED IN) --> 
+			<div tal:condition='python: not logged_in' class='title_wrapper'>
+				<span class='title_font'>Sign Up</span>
+			</div>
+			<!-- TITLE (IF NOT LOGGED IN) --> 
+
+			<!-- TITLE (IF LOGGED IN) --> 
+			<div tal:condition='python: logged_in' class='title_wrapper'>
+				<span class='title_font'>Create New Account</span>
+			</div>
+			<!-- TITLE (IF LOGGED IN) -->
+
+			<!-- NOTIFICATION MESSAGE -->
+			<div id='notification_message'>
+				<span tal:condition="python: not (message == '')" class='sub_title_font'>
+					${message}
+				</span>
+			</div>
+			<!-- NOTIFICATION MESSAGE -->
+			<br /><br />
+			
+			<!-- SIGNUP FORM -->
+			<div class='side_box'>
+				<table class='signup_form'>
+					<thead></thead>
+					<tbody>
+						<form action='/signup' method='post'>
+							<tr>
+								<td class='label_slot'><label>Username: </label></td>
+								<td><input type='text' class='text_input' name='username' placeholder='Type a Username'/></td>
+							</tr>
+							<tr>
+								<td class='label_slot'><label>Email: </label></td>
+								<td><input type='email' class='text_input' name='email' placeholder='Type Your Email' /></td>
+							</tr>
+							<tr>
+								<td class='label_slot'><label>Password: </label></td>
+								<td><input id='psswd' type='password' class='text_input' name='password' /></td>
+							</tr>
+							<tr>
+								<td class='label_slot'><label>Confirm Password: </label></td>
+								<td><input type='password' class='text_input' name='password_confirm' /></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td>
+									<input type='checkbox' name='terms_accepted' value='I Accept'/>
+									<label class='small_font'>I have read, and accept, <a href='/terms'>The Terms and Conditions</a></label>
+								</td>
+							</tr>
+							<tr>
+								<td></td>
+								<td>
+									<input type='checkbox' name='solicitation' value='I Agree'/>
+									<label class='small_font'>Send me Email updates and Information</label>
+								</td>
+							</tr>
+							<tr>
+								<td></td>
+								<td><input type='submit' value='Sign Up' class='submit_btn' name='form.submitted' disabled/></td>
+							</tr>
+						</form>
+					</tbody>
+				</table>
+			</div>
+			<!-- SIGNUP FORM -->
+
+			<!-- WHY JOIN (IF NOT LOGGED IN)-->
+			<div class='side_box' tal:condition='python: not logged_in'>
+				<span class='title_font'>Why Join?</span>
+				<br /><br />
+				<div class='slideshow_box'>
+					<img src='/static/images/icons/arrow_left_icon.png' data-direction='left' class='slideshow_handle' />
+
+					<div id='slide_pane'>
+						<div class='slide current_slide' id='slide_organize' data-slide='organize' >
+							<canvas
+								id='film_organize' 
+								data-film='organize' 
+								data-message="Organize your Movie Collection" 
+								class='film_strip'>
+								Fubb let's you organize your movies.
+								<img 
+							</canvas>						
+						</div>
+						<div class='slide hidden_slide' id='slide_showoff' data-slide='showoff' >
+							<canvas id='film_showoff' data-film='showoff' class='film_strip'>
+								Fubb let's you show off your Collection to your friends.
+							</canvas>						
+						</div>
+					</div>
+
+					<img src='/static/images/icons/arrow_right_icon.png' data-direction='right' class='slideshow_handle' />
+				</div>
+			</div>
+			<!-- WHY JOIN (IF NOT LOGGED IN)-->
+			<br /><br />
+		</div>
+	</metal:slot>
+
+</metal:macro>

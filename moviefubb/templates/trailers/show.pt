@@ -1,0 +1,70 @@
+<metal:macro use-macro="master">
+
+	<metal:slot fill-slot="title">
+
+	    <title>Fubb | All Movie Trailers</title>
+	
+	</metal:slot>
+
+	<metal:slot fill-slot="fb-meta">
+		<meta property="og:title" content="Fubb | All Movie Trailers"/>
+		<meta property="og:url" content="${request.url}"/>
+	</metal:slot>
+
+	<metal:slot fill-slot='css'>
+		<link rel='stylesheet' type='text/css' media='screen' href='/static/stylesheets/home.css' />
+	</metal:slot>
+
+	<metal:slot fill-slot='script'>
+		
+	</metal:slot>
+
+	<metal:slot fill-slot='description'>
+		
+	</metal:slot>
+
+	<metal:slot fill-slot='content'>
+
+		<div class='scroll_page'>
+
+			<br /><br />
+
+			<!-- TITLE -->
+			<div class='title_wrapper'>
+				<span class='title_font'>
+					${movie.title} (${movie.year})
+					<a href='${request.application_url}/trailers/random'>
+						<img src='/static/images/icons/random_icon.png' class='subtab_icon' />
+					</a>
+				</span>
+			</div>
+			<!-- TITLE -->
+
+			<br /><br />
+
+			<!-- MOVIE PLAYER -->
+			<div class='side_box'>
+				<div id='movie_player'>
+					<iframe width="440" height="320" src="https://www.youtube.com/embed/${movie.embed}" frameborder="0" allowfullscreen></iframe>
+				</div>
+			</div>
+			<!-- MOVIE PLAYER -->
+
+			<div class='side_box'>
+				<p class='basic_font'>
+					<a title='Click here to visit the IMDB page' href='http://www.imdb.com/title/${movie.imdb_id}/?ref_=fn_al_tt_1' target='_blank'>
+						<img class='page_title_image sub_tab' src='/static/images/icons/imdb_icon.png' />
+					</a>
+					<br /><br />
+					${movie.plot}
+					<Br /><br />
+					Runtime: ${movie.runtime} | Rating: ${movie.rated}
+					<br /><br />
+					Director: ${movie.director} 
+					<br /><br />
+					Cast: ${movie.actors}
+				</p>
+			</div>
+	</metal:slot>
+
+</metal:macro>

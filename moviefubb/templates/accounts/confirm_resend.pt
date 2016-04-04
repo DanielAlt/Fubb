@@ -1,0 +1,76 @@
+<metal:macro use-macro="master">
+
+	<metal:slot fill-slot="title">
+	    <title>Fubb | Email Resent</title>
+	</metal:slot>
+
+	<metal:slot fill-slot="fb-meta">
+		<meta property="og:image" content="link/to/image"/>
+		<meta property="og:title" content="Fubb | Confirm your Account"/>
+		<meta property="og:url" content="url/path/to/this/page"/>
+		<meta property="og:type" content="blog"/>
+	</metal:slot>
+
+	<metal:slot fill-slot='css'>
+		<link rel='stylesheet' type='text/css' media='screen' href='/static/stylesheets/text_pages.css' />
+	</metal:slot>
+
+	<metal:slot fill-slot='script'>
+		
+	</metal:slot>
+
+	<metal:slot fill-slot='description'>
+		
+	</metal:slot>
+
+	<metal:slot fill-slot='content'>
+		<br /><br />
+		<div tal:condition='python: success'>
+			<span class='title_font'>
+				Email Sent
+				<span class='sub_title_font'>
+			</span>
+
+			</span>
+			<p class='basic_font text_col'>
+				An Email was successfully delivered to, ${user.email}. To Confirm your account, click the link provided in the email.  
+			</p>
+		</div>
+
+		<div tal:condition='python: (not success)'>
+			
+			<div tal:condition='python: (current_user.id == user.id) and (user.confirmed)'>
+				<span class='title_font'>
+					Account Already Confirmed. 
+					<img src='/static/images/icons/warning_icon.png' class='subtab_icon' />
+				</span>
+				<p class='basic_font text_col'>
+					You already confirmed your account once. You do not need to confirm it again.
+				</p>
+			</div>
+
+			<div tal:condition='python: (current_user.id == user.id) and (user.confirmed == False)'>
+				<span class='title_font'>
+					An Error occured. 
+					<img src='/static/images/icons/warning_icon.png' class='subtab_icon' />
+				</span>
+				<p class='basic_font text_col'>
+					The confirmation could not be successfully delivered to, ${user.email},
+					please check that the email provided is valid and try again.
+				</p>
+			</div>
+
+			<div tal:condition='python: not (current_user.id == user.id) and (user.confirmed == False)'>
+				<span class='title_font'>
+					Permission Denied. 
+					<img src='/static/images/icons/warning_icon.png' class='subtab_icon' />
+				</span>
+				<p class='basic_font text_col'>
+					You're trying to resend a confirmation email to an account that you are not logged in on. If you also own this account, Please <a href='${request.application_url}/logout'>Logout</a> and Sign In to the correct account. 
+				</p>
+			</div>
+		</div>
+
+	</metal:slot>
+
+</metal:macro>

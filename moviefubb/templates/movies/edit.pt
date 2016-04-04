@@ -1,0 +1,251 @@
+<metal:macro use-macro="master">
+
+	<metal:slot fill-slot="title">
+	    <title>Fubb | Edit ${movie.title}</title>
+	</metal:slot>
+
+	<metal:slot fill-slot="fb-meta">
+		<meta property="og:image" content="${movie.poster}"/>
+		<meta property="og:title" content="Movie Fubb | Edit ${movie.title}"/>
+		<meta property="og:url" content="${request.application_url}/accounts/${user.id}/movies/${movie.id}/edit"/>
+	</metal:slot>
+
+	<metal:slot fill-slot='css'>
+		<link rel='stylesheet' type='text/css' media='screen' href='/static/stylesheets/forms.css' />
+		<link rel='stylesheet' type='text/css' media='screen' href='/static/stylesheets/home.css' />
+		<link rel='stylesheet' type='text/css' media='screen' href='/static/stylesheets/movies.css' />
+	</metal:slot>
+
+	<metal:slot fill-slot='script'>
+		<script type='text/javascript' src='static/javascripts/forms.js'></script>
+		<script type='text/javascript' src='/static/javascripts/movies.js'></script>
+	</metal:slot>
+
+	<metal:slot fill-slot='description'>
+		
+	</metal:slot>
+
+	<metal:slot fill-slot='content'>
+		<div class='scroll_page'>
+
+			<br />
+
+			<!-- TITLE -->
+			<div class='title_wrapper'>
+				<span class='title_font'>
+					Edit ${movie.title}
+					<a href='/accounts/${user.id}/movies/${movie.id}'>
+						<img title='Edit a New Movie' class='page_title_image sub_tab' data-tab='movielist' src='/static/images/icons/arrow_left_icon.png' />
+					</a>
+				</span>
+			</div>
+			<!-- TITLE -->
+
+			<!-- NOTIFICATION MESSAGE -->
+			<div id='notification_message'>
+				<span tal:condition="python: not (message == '')" class='sub_title_font'>
+					${message}
+				</span>
+			</div>
+			<!-- NOTIFICATION MESSAGE -->
+			<br /><br />
+
+			<div class='side_box'>
+
+				<table>
+					<form action="/accounts/${user.id}/movies/${movie.id}/edit" method="post">
+						<tbody>
+							<tr>
+								<td class='label_slot'>
+									<label>Title:</label>
+								</td>
+								<td>
+									<input type='text' name='title' class='text_input' value='${movie.title}' />
+								</td>
+							</tr>
+							<tr>
+								<td class='label_slot'>
+									<label>Genre:</label>
+								</td>
+								<td>
+									<input type='text' name='genre_tags' value='${movie.genre_tags}' placeholder='#Horror' class='text_input' />
+								</td>
+							</tr>
+							<tr>
+								<td class='label_slot'>
+									<label>Format</label>
+								</td>
+								<td>
+									<select tal:condition='python: (movie.location=="any")' name='location' class='dropdown_input'>
+										<option value='any'>Any</option>
+										<option value='dvd'>DVD</option>
+										<option value='bluray'>Bluray</option>
+										<option value='vhs'>VHS</option>
+										<option value='hd'>External HD</option>
+										<option value='computer'>Computer</option>
+									</select>
+									<select tal:condition='python: (movie.location=="dvd")' name='location' class='dropdown_input'>
+										<option value='dvd'>DVD</option>
+										<option value='any'>Any</option>
+										<option value='bluray'>Bluray</option>
+										<option value='vhs'>VHS</option>
+										<option value='hd'>External HD</option>
+										<option value='computer'>Computer</option>
+									</select>
+									<select tal:condition='python: (movie.location=="bluray")' name='location' class='dropdown_input'>
+										<option value='bluray'>Bluray</option>
+										<option value='any'>Any</option>
+										<option value='dvd'>DVD</option>
+										<option value='vhs'>VHS</option>
+										<option value='hd'>External HD</option>
+										<option value='computer'>Computer</option>
+									</select>
+									<select tal:condition='python: (movie.location=="vhs")' name='location' class='dropdown_input'>
+										<option value='vhs'>VHS</option>
+										<option value='any'>Any</option>
+										<option value='dvd'>DVD</option>
+										<option value='bluray'>Bluray</option>
+										<option value='hd'>External HD</option>
+										<option value='computer'>Computer</option>
+									</select>
+									<select tal:condition='python: (movie.location=="hd")' name='location' class='dropdown_input'>
+										<option value='hd'>External HD</option>
+										<option value='vhs'>VHS</option>
+										<option value='any'>Any</option>
+										<option value='dvd'>DVD</option>
+										<option value='bluray'>Bluray</option>
+										<option value='computer'>Computer</option>
+									</select>
+									<select tal:condition='python: (movie.location=="computer")' name='location' class='dropdown_input'>
+										<option value='computer'>Computer</option>
+										<option value='any'>Any</option>
+										<option value='dvd'>DVD</option>
+										<option value='bluray'>Bluray</option>
+										<option value='vhs'>VHS</option>
+										<option value='hd'>External HD</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td class='label_slot'>
+									<label>Watched Status</label>
+								</td>
+								<td>
+									<select tal:condition='python: (movie.status_w=="watched")' class='dropdown_input' name='status_w'>
+										<option value='watched'>Watched</option>
+										<option value='unwatched'>Not Watched</option>
+									</select>
+									<select tal:condition='python: (movie.status_w=="unwatched")' class='dropdown_input' name='status_w' value='${movie.status_w}'>
+										<option value='unwatched'>Not Watched</option>
+										<option value='watched'>Watched</option>
+									</select>
+								</td>
+							</tr>
+
+							<tr>
+								<td class='label_slot'>
+									<label>Download Status</label>
+								</td>
+								<td>
+									<select tal:condition='python: (movie.status_dl=="NA")' class='dropdown_input' name='status_dl' value='${movie.status_dl}'>
+										<option value='NA'>N/A</option>
+										<option value='pending'>Pending</option>
+										<option value='downloading'>Downloading</option>
+										<option value='downloaded'>Downloaded</option>
+										<option value='deleted'>Deleted</option>
+									</select>
+									<select tal:condition='python: (movie.status_dl=="pending")' class='dropdown_input' name='status_dl' value='${movie.status_dl}'>
+										<option value='pending'>Pending</option>
+										<option value='NA'>N/A</option>
+										<option value='downloading'>Downloading</option>
+										<option value='downloaded'>Downloaded</option>
+										<option value='deleted'>Deleted</option>
+									</select>
+									<select tal:condition='python: (movie.status_dl=="downloading")' class='dropdown_input' name='status_dl' value='${movie.status_dl}'>
+										<option value='downloading'>Downloading</option>
+										<option value='NA'>N/A</option>
+										<option value='pending'>Pending</option>
+										<option value='downloaded'>Downloaded</option>
+										<option value='deleted'>Deleted</option>
+									</select>
+									<select tal:condition='python: (movie.status_dl=="downloaded")' class='dropdown_input' name='status_dl' value='${movie.status_dl}'>
+										<option value='downloaded'>Downloaded</option>
+										<option value='NA'>N/A</option>
+										<option value='pending'>Pending</option>
+										<option value='downloading'>Downloading</option>
+										<option value='deleted'>Deleted</option>
+									</select>
+									<select tal:condition='python: (movie.status_dl=="deleted")' class='dropdown_input' name='status_dl' value='${movie.status_dl}'>
+										<option value='deleted'>Deleted</option>
+										<option value='downloaded'>Downloaded</option>
+										<option value='NA'>N/A</option>
+										<option value='pending'>Pending</option>
+										<option value='downloading'>Downloading</option>
+									</select>
+								</td>
+							</tr>
+
+							<tr>
+								<td class='label_slot'>
+									<label>IMDB ID</label>
+								</td>
+								<td>
+									<input type='text' class='text_input' value='${movie.imdb_id}' name='imdb_id'/>
+								</td>
+							</tr>
+							<tr>
+								<td class='label_slot'>
+									<label>YT Embed</label>
+								</td>
+								<td>
+									<input class='text_input' type='text' value='${movie.embed}' name='embed' />
+								</td>
+							</tr>
+							<tr>
+								<td></td>
+								<td>
+									<input type='submit' class='submit_btn' name='form.submitted' value='Submit' />
+								</td>
+							</tr>
+						</tbody>
+					</form>
+				</table>
+			</div>
+
+			<div class='side_box'>
+				<div class='sidebox_title'>
+					Rules for Movies
+				</div>
+				<ul id='rules_list'>
+					<br />
+					<li id='title_rule'>
+						The Title Must be greater than 0 Characters, and less than 100 Characters, in length. 
+					</li>
+					<li id='genre_rule'>
+						Genres Must be separated by the # sign, and must only contain letters. 
+					</li>
+				</ul>
+			</div>
+			<div class='side_box'></div>
+			<div class='side_box'>
+				<table style='width:100%;'>
+					<tbody>
+						<tr style='width:100%;' class='label_slot'>
+							<td>
+								<label class='sub_title_font'>Destructive Actions</label>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<input type='button'  class='delete_btn destructive_btn' data-mtitle='${movie.title}'  data-deleteUrl='${request.application_url}/accounts/${user.id}/movies/${movie.id}/delete' class='destructive_btn' value='Delete This Film' />
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<br /><br />
+		</div>
+
+	</metal:slot>
+
+</metal:macro>
