@@ -38,5 +38,6 @@ Thumbs.db
 
 # Custom to Fubb      #
 #######################
-moviefubb/uploads/*
-
+moviefubb/uploads/
+MovieFubb.egg.info/
+*.pyc
