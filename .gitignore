@@ -41,3 +41,4 @@ Thumbs.db
 moviefubb/uploads/
 MovieFubb.egg.info/
 *.pyc
+MovieFubb.sqlite

@@ -27,9 +27,9 @@ dvdlist_path = os.path.join(os.getcwd(), 'moviefubb', 'scripts', 'dvd_list.txt')
 def addMovie(user_id, title):
     try:
         bot_info = sweep.botSweep(title=title)
-    except TypeError:
+    except Exception:
         bot_info = None
-        
+
     if bot_info is not None:
         movie = Movie(
             user_id = user_id,
@@ -85,16 +85,16 @@ def main(argv=sys.argv):
     DBSession.configure(bind=engine)
     Base.metadata.drop_all(engine)
     Base.metadata.create_all(engine)
-    
+
     with transaction.manager:
 
         # Create Basic User Groups
         admin_group = Group(groupname='admin')
         user_group = Group(groupname='user')
 
-        # Create Admin and Regular Users        
+        # Create Admin and Regular Users
         admin_user = User(
-            username='admin', 
+            username='admin',
             email='julien.altenburg@gmail.com',
             password= hashpassword('SKY_CANDY'),
             confirmed=False,
@@ -104,7 +104,7 @@ def main(argv=sys.argv):
             entry_date = datetime.datetime.today()
         )
         regular_user = User(
-            username='DanielAlt', 
+            username='DanielAlt',
             email='daniel.j.altenburg@gmail.com',
             password=hashpassword('SKY_CANDY'),
             confirmed= False,
