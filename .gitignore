@@ -38,7 +38,9 @@ Thumbs.db
 
 # Custom to Fubb      #
 #######################
+build/
+dist/
 moviefubb/uploads/
-MovieFubb.egg.info/
+MovieFubb.egg-info
 *.pyc
 MovieFubb.sqlite

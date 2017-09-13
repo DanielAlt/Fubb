@@ -10,7 +10,8 @@ requires = [
     'transaction',
     'zope.sqlalchemy',
     'waitress',
-    'docutils'
+    'docutils',
+    'requests'
     ]
 
 setup(name='MovieFubb',
