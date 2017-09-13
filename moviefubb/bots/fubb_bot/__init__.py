@@ -65,14 +65,17 @@ class FubbBot(threading.Thread):
 
     def run(self):
         while (self.awake):
-            time.sleep(1000.0/self.config['refresh_interval'])
+            time.sleep(self.config['refresh_interval']/1000.0)
 
             """ Start new Tasks """
             threads_to_create = self.config['maximum_threads'] - len(self.active_tasks)
+            threads_to_create = threads_to_create if ( threads_to_create <= len(self.task_queue) ) else len(self.task_queue)
+
             if (threads_to_create > 0):
-                for x in range(0, threads_to_create+1):
+                for x in range(0, threads_to_create):
                     request_id = self.task_queue.keys()[0]
                     thread_data = self.task_queue.pop( request_id )
+                    thread_data.update({'request_id': request_id})
                     thread = _object_library[thread_data['method']](self, **thread_data['args'])
                     thread.start()
                     self.active_tasks.append(thread)
@@ -82,9 +85,9 @@ class FubbBot(threading.Thread):
 
             """ Kill old Tasks """
             for thread in self.active_tasks:
-                if not thread.isAlive:
+                if not thread.isAlive():
                     self.active_tasks.remove(thread)
                     self.finished_tasks.append(thread)
-                    self.logger.log(Logger.INFO, 'finished task: %s, removing from task queue' % thread.request_id)
+                    self.logger.log(Logger.INFO, 'finished task: %s, removing from task queue' % thread.config['request_id'])
                     # Here you would use some object to broadcast the status to the user using
                     # the request_id
