@@ -53,7 +53,7 @@ class Logger():
             print(log_line)
 
             with open(self.output_path, 'a') as f:
-                f.write(log_line)
+                f.write(log_line + '\n')
                 f.close()
 
 

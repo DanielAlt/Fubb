@@ -3,12 +3,12 @@ from pyramid.authentication import AuthTktAuthenticationPolicy
 from pyramid.authorization import ACLAuthorizationPolicy
 
 from sqlalchemy import engine_from_config
-from moviefubb.security import groupfinder
+from moviefubb.helpers.security import groupfinder
 
-from .models import (
+from .app.models import (
     DBSession,
-    Base,
-    )
+    Base
+)
 
 def main(global_config, **settings):
     engine = engine_from_config(settings, 'sqlalchemy.')
