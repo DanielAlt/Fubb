@@ -55,3 +55,5 @@ class Logger():
             with open(self.output_path, 'a') as f:
                 f.write(log_line)
                 f.close()
+
+

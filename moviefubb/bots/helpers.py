@@ -1,5 +1,8 @@
 import random
 
+class ParserReturn(Exception):
+	pass
+
 def updateConfig(args, kwargs):
     for arg in args.keys():
         if arg in kwargs.keys():

@@ -4,6 +4,8 @@ from .. import (
     helpers as Helpers
 )
 
+""" OMDB Requires an API key """
+
 class LookupHandler(threading.Thread):
 	def __init__(self, dispatcher, **kwargs):
 		threading.Thread.__init__(self)

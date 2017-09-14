@@ -8,16 +8,17 @@ from .. import (
 from . import (
     omdb_bot as omdb,
     imdb_bot as imdb,
-    magnet_bot as magnet,
+    pirate_bot as pirate,
     poster_bot as poster,
-    trailer_bot as trailer
+    trailer_bot as trailer,
+    tmdb_bot as tmdb
 )
 
 _object_library = {
     'omdb': omdb.LookupHandler,
     'imdb': imdb.LookupHandler,
-    'magnet': magnet.LookupHandler,
-    'poster': poster.LookupHandler,
+    'tmdb': tmdb.LookupHandler,
+    'pirate': pirate.LookupHandler,
     'trailer': trailer.LookupHandler
 }
 
@@ -63,6 +64,9 @@ class FubbBot(threading.Thread):
                 self.task_queue.pop( self.task_queue.keys()[self.task_queue.keys().index(task)] )
         return (self)
 
+    def exit(self):
+        self.awake = False
+
     def run(self):
         while (self.awake):
             time.sleep(self.config['refresh_interval']/1000.0)
@@ -75,7 +79,7 @@ class FubbBot(threading.Thread):
                 for x in range(0, threads_to_create):
                     request_id = self.task_queue.keys()[0]
                     thread_data = self.task_queue.pop( request_id )
-                    thread_data.update({'request_id': request_id})
+                    thread_data['args'].update({'request_id': request_id})
                     thread = _object_library[thread_data['method']](self, **thread_data['args'])
                     thread.start()
                     self.active_tasks.append(thread)
